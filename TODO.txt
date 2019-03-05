@@ -1,0 +1,42 @@
+Bewegende mist voor startscherm
+Achievements
+Random map die word gegenereerd met stukken map
+Score = geld, geld is score
+Mooie doorzichtig rode dunne laserpointer
+Upgradeshop dit ook je current stats laat zien
+Controls schermpje
+Als je met 2 triggers schiet de dual schiet animatie filmpje gebruiken en anders de single animatie
+Lasersight checken met raycast of ie iets hit en dan line afbreken
+Bullets despawnen gelijk
+Alleen 90 graden kunnen schieten?
+Comments!
+Kleinere bullets
+Bulletjes met een lichtlijntje erachter
+Hide cursor ingame
+Geen timers maar Invoke?
+Controller support
+Project op github
+controller rotatie
+font gebruiken (al in projectfolder)
+Doodanimatie
+Schietanimatie
+Krijg damage animatie
+
+
+Upgradeshop ideeen
+Laser length
+Bullet speed, damage, rainbow color, shootdelay, bullet alive time, laser sight length, camerauitzoom
+Health
+Knockback
+
+Physics
+Player collide niet met bullet want bullet destroyed op impact
+
+
+Uren
+Player 8uur want had wat problemen met de animaties en lasersights
+
+
+Asset store models
+Player
+Bullet
