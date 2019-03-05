@@ -6,7 +6,7 @@ public class Follow : MonoBehaviour
 {
     public Transform target;
 
-    public Vector3 positionOffest = new Vector3(0, 3, -2);
+    public Vector3 positionOffest = new Vector3(0, 4, -3);
     public Vector3 rotation = new Vector3(45, 0, 0);
 
     void Start()

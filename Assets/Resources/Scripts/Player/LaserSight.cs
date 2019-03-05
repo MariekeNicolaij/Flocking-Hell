@@ -6,7 +6,7 @@ public class LaserSight : MonoBehaviour
 {
     public GameObject targetForward;
     LineRenderer laser;
-    Color laserColor = new Color(255, 0, 0, 0.25f);
+    Color laserColor = new Color(255, 0, 0);
 
     float laserLength = 3;
     float laserWidth = 0.005f;
@@ -23,10 +23,7 @@ public class LaserSight : MonoBehaviour
     {
         laser = gameObject.AddComponent<LineRenderer>();
         laser.material.color = laserColor;
-        laser.startWidth = laserWidth;
-        laser.endWidth = laserWidth;
-        laser.startColor = laserColor;
-        laser.endColor = laserColor;
+        laser.widthMultiplier = laserWidth;
 
         laser.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     }

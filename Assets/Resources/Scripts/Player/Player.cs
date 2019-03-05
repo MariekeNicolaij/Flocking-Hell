@@ -80,7 +80,6 @@ public class Player : MonoBehaviour
 
     public void Shoot(bool shootLeft)
     {
-        Debug.Log(shootLeft);
         GameObject shootingPistol = (shootLeft) ? leftPistol : rightPistol;
 
         Vector3 startPosition = shootingPistol.transform.position;

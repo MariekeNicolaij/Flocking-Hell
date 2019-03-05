@@ -37,11 +37,11 @@ public class PlayerInputController : MonoBehaviour
     {
         //Debug.Log("Left " + Input.GetAxis("Shoot Left"));
         //Debug.Log("Right " + Input.GetAxis("Shoot Right"));
-        if (Input.GetAxis("Shoot Left") != 0)
+        if (Input.GetAxis("Shoot Left") > 0 || Input.GetButton("Shoot Left"))
         {
             player.InitiateShootLeftPistol();
         }
-        if (Input.GetAxis("Shoot Right") != 0)
+        if (Input.GetAxis("Shoot Right") > 0 || Input.GetButton("Shoot Right"))
         {
             player.InitiateShootRightPistol();
         }
@@ -49,15 +49,23 @@ public class PlayerInputController : MonoBehaviour
 
     void FaceCursorDirection()
     {
+        float x = 0, y = 0, angle = 0;
+
         if (Input.mousePosition != Vector3.zero)
         {
             Vector3 playerPositionScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
             Vector3 direction = Input.mousePosition - playerPositionScreenPoint;
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            angle -= 90;    // Rotate correctly to mouse direction (It is 90 degrees off)
-
-            transform.rotation = Quaternion.AngleAxis(-angle, Vector3.up);
+            x = direction.x;
+            y = direction.y;
         }
+        if (Input.GetAxis("Right Stick Horizontal") != 0 || Input.GetAxis("Right Stick Vertical") != 0)
+        {
+            x = Input.GetAxis("Right Stick Horizontal");
+            y = -Input.GetAxis("Right Stick Vertical");
+        }
+
+        angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+        angle -= 90;    // Rotate correctly to mouse direction (It is 90 degrees off)
+        transform.rotation = Quaternion.AngleAxis(-angle, Vector3.up);
     }
 }
