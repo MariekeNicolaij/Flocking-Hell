@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     LineRenderer line;
     float lineLength = 1.5f;
-    Color lineColor = new Color(255, 255, 0);
+    Color lineColor = new Color(0, 100, 255);
 
     float bulletAliveTime = 1;
 
@@ -40,8 +40,9 @@ public class Bullet : MonoBehaviour
         line.SetPositions(new Vector3[2] { transform.position, transform.position + (transform.up * lineLength) });
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
+        Debug.Log(other.collider.name);
         DestroyBullet();
     }
 

@@ -13,15 +13,15 @@ public class Player : MonoBehaviour
     public GameObject rightPistol;
 
     // Player
+    Rigidbody rBody;
     bool dead;
 
     int health, maxHealth;
-    int moveSpeed = 2;
     int knockbackForce;
     int score;
     int money;
 
-    float rotateOffset = 15;
+    float moveSpeed = 0.1f;
 
     // Shooting
     bool canShootLeft = true, canShootRight = true;
@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animator.SetBool("Aiming", true);
+        rBody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -49,7 +50,8 @@ public class Player : MonoBehaviour
     public void Move(float x, float y)
     {
         Vector3 direction = new Vector3(x, 0, y);
-        transform.position += direction * Time.smoothDeltaTime * moveSpeed;
+        rBody.MovePosition(transform.position + (direction * moveSpeed));
+        //transform.position += direction * Time.smoothDeltaTime * moveSpeed;
     }
 
     // Called in PlayerInput

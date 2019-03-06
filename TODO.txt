@@ -21,6 +21,7 @@ font gebruiken (al in projectfolder)
 Doodanimatie
 Schietanimatie
 Krijg damage animatie
+Muren op de edges
 
 
 Upgradeshop ideeen

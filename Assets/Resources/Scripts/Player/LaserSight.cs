@@ -9,7 +9,7 @@ public class LaserSight : MonoBehaviour
     Color laserColor = new Color(255, 0, 0);
 
     float laserLength = 3;
-    float laserWidth = 0.005f;
+    float laserWidth = 0.01f;
 
 
     void Start()

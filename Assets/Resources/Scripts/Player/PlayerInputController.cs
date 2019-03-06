@@ -18,8 +18,19 @@ public class PlayerInputController : MonoBehaviour
         FaceCursorDirection();
     }
 
+    bool CanMove()
+    {
+        RaycastHit hit;
+        bool b = !(Physics.Raycast(transform.position, transform.forward, out hit, 0.1f));
+
+        Debug.Log(b);
+        return b;
+    }
+
     void Move()
     {
+        //if (!CanMove())
+        //    return;
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             if (!player.animator.GetBool("Move"))
