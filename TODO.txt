@@ -22,6 +22,13 @@ Doodanimatie
 Schietanimatie
 Krijg damage animatie
 Muren op de edges
+Explosies als enemies dood gaan
+bullet destroy animatie?
+Ai levens
+Ai groepen
+Wave system
+Muur spooky maken
+navmeshobstacle op alle platforms zetten en carving aanvinken
 
 
 Upgradeshop ideeen
@@ -34,10 +41,7 @@ Physics
 Player collide niet met bullet want bullet destroyed op impact
 
 
-Uren
-Player 8uur want had wat problemen met de animaties en lasersights
-
-
 Asset store models
 Player
 Bullet
+Explosion Particles

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     int score;
     int money;
 
-    float moveSpeed = 0.1f;
+    float moveSpeed = 2f;
 
     // Shooting
     bool canShootLeft = true, canShootRight = true;
@@ -50,8 +50,7 @@ public class Player : MonoBehaviour
     public void Move(float x, float y)
     {
         Vector3 direction = new Vector3(x, 0, y);
-        rBody.MovePosition(transform.position + (direction * moveSpeed));
-        //transform.position += direction * Time.smoothDeltaTime * moveSpeed;
+        rBody.MovePosition(transform.position + (direction * moveSpeed * Time.deltaTime));
     }
 
     // Called in PlayerInput

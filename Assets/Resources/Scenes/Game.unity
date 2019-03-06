@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -416,14 +416,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc3fc80d140ae946a84a87c6792f802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 2052019680}
-  terrain: {fileID: 0}
+  parent: {fileID: 2052019681}
+  terrain: {fileID: 1849386201}
+  wallPrefab: {fileID: 636728281355982570, guid: 6334e0e13f09b614382f91c8d2dd1da4,
+    type: 3}
   platformPrefabs:
   - {fileID: 1038340875045289890, guid: 9352194cbd93ae84dbf9e0cae9123cf4, type: 3}
   - {fileID: 2852083955873576462, guid: 6c9264db64f541c4e87b256395d4ddb3, type: 3}
   - {fileID: 3867539863687968571, guid: 7921a28759260fc4b9c49f7cea8f6ea7, type: 3}
   - {fileID: 3867539863687968571, guid: c9d0d84fa6419ed4ea8f67b3996cbaf8, type: 3}
-  spawnStartPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &1317301249
 PrefabInstance:
   m_ObjectHideFlags: 0

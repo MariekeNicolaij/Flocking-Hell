@@ -13,5 +13,8 @@ public class EnemyManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        if (!terrain)
+            terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
     }
 }

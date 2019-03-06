@@ -16,7 +16,7 @@ public class BulletManager : MonoBehaviour
     {
         Bullet bullet = Instantiate(bulletPrefab);
 
-        bullet.SetBullet();
+        bullet.InitiateBullet();
 
         return bullet;
     }

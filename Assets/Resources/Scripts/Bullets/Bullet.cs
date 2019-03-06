@@ -6,44 +6,60 @@ public class Bullet : MonoBehaviour
     [HideInInspector]
     public Rigidbody rBody;
 
-    LineRenderer line;
-    float lineLength = 1.5f;
-    Color lineColor = new Color(0, 100, 255);
+    ParticleSystem particles;
 
+    LineRenderer line;
+    Color lineColor = new Color(0, 100, 255);
+    Vector3 startPosition;
+    float lineLength = 1.5f;
+
+    float minDamage, maxDamage, actualDamage;
     float bulletAliveTime = 1;
 
-    //bool rainbow;
-    //Color[] randomColor = { Color.blue, Color.cyan, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
 
-    public void SetBullet()
+    public void InitiateBullet()
     {
         rBody = GetComponent<Rigidbody>();
 
         Invoke("DestroyBullet", bulletAliveTime);
-        //rainbow = System.Convert.ToBoolean(PlayerPrefs.GetInt("RainbowBulletsEnabled"));
-        //if (rainbow)
-        //    GetComponent<Renderer>().material.color = randomColor[Random.Range(0, randomColor.Length)];
-
-
     }
 
     void Start()
     {
+        particles = GetComponentInChildren<ParticleSystem>();
         line = gameObject.AddComponent<LineRenderer>();
         line.material.color = lineColor;
         line.widthMultiplier = 0.0015f;
+        startPosition = transform.position;
     }
 
     void Update()
     {
         // Want to keep the line right behind the bullet
-        line.SetPositions(new Vector3[2] { transform.position, transform.position + (transform.up * lineLength) });
+        line.SetPositions(new Vector3[2] { startPosition, transform.position });
     }
 
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.collider.name);
-        DestroyBullet();
+            Debug.Log(other.collider.name);
+        if (other.collider.tag == "AI")
+        {
+            Debug.Log("AI");
+        }
+
+        PlayDestroyAnimation();
+    }
+
+    void PlayDestroyAnimation()
+    {
+        line.enabled = false;
+        rBody.velocity = Vector3.zero;
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        particles.Play();
+
+        Invoke("DestroyBullet", particles.main.duration);
     }
 
     void DestroyBullet()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnvironmentManager : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class EnvironmentManager : MonoBehaviour
     public Transform parent;
     public Terrain terrain;
 
+    public GameObject wallPrefab;
     public List<GameObject> platformPrefabs;
 
-    public Vector3 spawnStartPosition;
+    Vector3 spawnStartPosition;
 
-    float positionOffset = 10;
+    int positionOffset = 10, rotatenOffset = 90;
     float currentX = 0, currentZ = 0;
     float maxTerrainX, maxTerrainZ;
 
@@ -24,8 +26,6 @@ public class EnvironmentManager : MonoBehaviour
         if (!terrain)
         {
             terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
-            maxTerrainX = terrain.terrainData.size.x;
-            maxTerrainZ = terrain.terrainData.size.z;
         }
         if (!parent)
         {
@@ -37,30 +37,47 @@ public class EnvironmentManager : MonoBehaviour
             Debug.LogError("No platforms/parent/terrain selected!");
         }
 
+        maxTerrainX = terrain.terrainData.size.x;
+        maxTerrainZ = terrain.terrainData.size.z;
+
+        SpawnWalls();
         SpawnPlatforms();
+    }
+
+    void SpawnWalls()
+    {
+        // Wall bottomleft to upleft
+        for (int i = -positionOffset; i <= maxTerrainZ; i += positionOffset)
+            SpawnWall(new Vector3(-positionOffset, 0, i));
+        // Wall upleft to upright
+        for (int i = -positionOffset; i < maxTerrainX; i += positionOffset)
+            SpawnWall(new Vector3(i, 0, maxTerrainZ));
+        // Wall upright to bottomright
+        for (int i = (int)maxTerrainZ; i > -positionOffset; i -= positionOffset)
+            SpawnWall(new Vector3(maxTerrainX, 0, i));
+        // Wall bottomright to bottomleft
+        for (int i = (int)maxTerrainX; i > -positionOffset; i -= positionOffset)
+            SpawnWall(new Vector3(i, 0, -positionOffset));
+    }
+
+    void SpawnWall(Vector3 position)
+    {
+        GameObject wall = Instantiate(wallPrefab);
+        wall.transform.SetParent(parent);
+        wall.transform.position = position;
     }
 
     void SpawnPlatforms()
     {
-        for (int z = 0; z < maxTerrainZ; z += 10)
+        for (int z = 0; z < maxTerrainZ; z += positionOffset)
         {
-            for (int x = 0; x < maxTerrainX; x += 10)
+            for (int x = 0; x < maxTerrainX; x += positionOffset)
             {
-                GameObject obj = Instantiate(platformPrefabs[Random.Range(0, platformPrefabs.Count)]);
-                obj.transform.position = new Vector3(x, 0, z);
+                GameObject platform = Instantiate(platformPrefabs[Random.Range(0, platformPrefabs.Count)]);
+                platform.transform.SetParent(parent);
+                platform.transform.position = new Vector3(x, 0, z);
             }
         }
-    }
-
-    Vector3 GetNextPosition()
-    {
-        return Vector3.zero;
-    }
-
-
-
-    void Update()
-    {
 
     }
 }
