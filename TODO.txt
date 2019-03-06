@@ -35,6 +35,10 @@ Alleen vliegende ai laten flocken
 meerdere soorten ai erin (lopende niet flocken ofcourse, die kunnen wel soort minibosses worden ofzo)
 Per 3 levels de ai groepen vergroten per 5
 
+
+Flocking hoe?
+
+
 Upgradeshop ideeen
 Laser length
 Bullet speed
