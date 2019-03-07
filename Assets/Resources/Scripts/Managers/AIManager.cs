@@ -5,79 +5,76 @@ using System.Collections.Generic;
 
 public class AIManager : MonoBehaviour
 {
-    //public static AIManager instance;
+    public static AIManager instance;
 
-    //public Terrain terrain;
+    public Terrain terrain;
 
-    //[HideInInspector]
-    //public List<GameObject> currentFlockingAIList, currentNormalAIList;
-    //public List<GameObject> flockingAIPrefab, normalAIPrefab;
-    //public List<Vector3> spawnPoints;
+    [HideInInspector]
+    public List<GameObject> currentFlockingAIList, currentNormalAIList;
+    public List<GameObject> flockingAIPrefab, normalAIPrefab;
+    public List<Vector3> spawnPoints;
 
-    //public int flockSize = 10;
+    public int flockSize = 10;
+
+    public float minVelocity = 5;
+    public float maxVelocity = 20;
+    public float randomness = 1;
+    public GameObject chasee;
+    public GameObject AIParent;
+
+    public Vector3 flockCenter;
+    public Vector3 flockVelocity;
 
 
-    //void Awake()
-    //{
-    //    instance = this;
-
-    //    if (flockingAIPrefab.Count == 0 || normalAIPrefab.Count == 0)
-    //        Debug.LogError("No AI prefab(s) configured. (Please configure them both)");
-
-    //    if (!terrain)
-    //        terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
-    //}
-
-    //int RandomIndex(int max)
-    //{
-    //    return Random.Range(0, max);
-    //}
-
-    //public void SpawnFlockingAIGroup()
-    //{
-    //    GameObject prefab = flockingAIPrefab[RandomIndex(flockingAIPrefab.Count)];
-    //    Vector3 spawnPosition = spawnPoints[RandomIndex(spawnPoints.Count)];
-    //    for (int i = 0; i < flockSize; i++)
-    //    {
-    //        GameObject ai = Instantiate(prefab);
-    //    }
-    //}
-
-    public GameObject boidPrefab;
-
-    public int spawnCount = 10;
-
-    public float spawnRadius = 4.0f;
-
-    [Range(0.1f, 20.0f)]
-    public float velocity = 6.0f;
-
-    [Range(0.0f, 0.9f)]
-    public float velocityVariation = 0.5f;
-
-    [Range(0.1f, 20.0f)]
-    public float rotationCoeff = 4.0f;
-
-    [Range(0.1f, 10.0f)]
-    public float neighborDist = 2.0f;
-
-    public LayerMask searchLayer;
-
-    void Start()
+    void Awake()
     {
-        for (var i = 0; i < spawnCount; i++) Spawn();
+        instance = this;
+
+        if (flockingAIPrefab.Count == 0 || normalAIPrefab.Count == 0)
+            Debug.LogError("No AI prefab(s) configured. (Please configure them both)");
+
+        //if(spawnPoints.Count == 0)
+        //    Debug.LogError("No spawnpoints selected!");
+
+        if (!terrain)
+            terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
+
+        SpawnFlockingAIGroup();
     }
 
-    public GameObject Spawn()
+    int RandomIndex(int max)
     {
-        return Spawn(transform.position + Random.insideUnitSphere * spawnRadius);
+        return Random.Range(0, max);
     }
 
-    public GameObject Spawn(Vector3 position)
+    public void SpawnFlockingAIGroup()
     {
-        var rotation = Quaternion.Slerp(transform.rotation, Random.rotation, 0.3f);
-        var boid = Instantiate(boidPrefab, position, rotation) as GameObject;
-        boid.GetComponent<AI>().controller = this;
-        return boid;
+        GameObject prefab = flockingAIPrefab[RandomIndex(flockingAIPrefab.Count)];
+        //Vector3 spawnPosition = spawnPoints[RandomIndex(spawnPoints.Count)];
+        for (int i = 0; i < flockSize; i++)
+        {
+            GameObject ai = Instantiate(prefab, transform.position, transform.rotation);
+            Vector3 position = new Vector3(50, 1, 50);
+
+            ai.transform.parent = AIParent.transform;
+            ai.transform.localPosition = position;
+            ai.GetComponent<AI>().SetController(gameObject);
+            currentFlockingAIList.Add(ai);
+        }
+    }
+
+    void Update()
+    {
+        Vector3 theCenter = Vector3.zero;
+        Vector3 theVelocity = Vector3.zero;
+
+        foreach (GameObject ai in currentFlockingAIList)
+        {
+            theCenter = theCenter + ai.transform.localPosition;
+            theVelocity = theVelocity + ai.GetComponent<Rigidbody>().velocity;
+        }
+
+        flockCenter = theCenter / (flockSize);
+        flockVelocity = theVelocity / (flockSize);
     }
 }

@@ -2,79 +2,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class AI : MonoBehaviour
 {
-    // Reference to the controller.
-    public AIManager controller;
+    GameObject Controller;
+    bool inited = false;
+    float minVelocity;
+    float maxVelocity;
+    float randomness;
+    GameObject chasee;
 
-    // Options for animation playback.
-    public float animationSpeedVariation = 0.2f;
+    //void Start()
+    //{
+    //}
 
-    // Random seed.
-    float noiseOffset;
-
-    // Caluculates the separation vector with a target.
-    Vector3 GetSeparationVector(Transform target)
+    public void SetController(GameObject theController)
     {
-        var diff = transform.position - target.transform.position;
-        var diffLen = diff.magnitude;
-        var scaler = Mathf.Clamp01(1.0f - diffLen / controller.neighborDist);
-        return diff * (scaler / diffLen);
+        Controller = theController;
+        minVelocity = AIManager.instance.minVelocity;
+        maxVelocity = AIManager.instance.maxVelocity;
+        randomness = AIManager.instance.randomness;
+        chasee = AIManager.instance.chasee;
+        inited = true;
+        StartCoroutine("BoidSteering");
     }
 
-    void Start()
+    IEnumerator BoidSteering()
     {
-        noiseOffset = Random.value * 10.0f;
+        while (true)
+        {
+            if (inited)
+            {
+                GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity + Calc() * Time.deltaTime;
 
-        var animator = GetComponent<Animator>();
-        if (animator)
-            animator.speed = Random.Range(-1.0f, 1.0f) * animationSpeedVariation + 1.0f;
+                // enforce minimum and maximum speeds for the boids
+                float speed = GetComponent<Rigidbody>().velocity.magnitude;
+                if (speed > maxVelocity)
+                {
+                    GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized * maxVelocity;
+                }
+                else if (speed < minVelocity)
+                {
+                    GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized * minVelocity;
+                }
+            }
+
+            float waitTime = Random.Range(0.3f, 0.5f);
+            yield return new WaitForSeconds(waitTime);
+        }
     }
-
-    void Update()
+    private Vector3 Calc()
     {
-        var currentPosition = transform.position;
-        var currentRotation = transform.rotation;
+        AIManager boidController = GameObject.Find("Scripts").GetComponent<AIManager>();
+        Vector3 randomize = new Vector3((Random.value * 2) - 1, (Random.value * 2) - 1, (Random.value * 2) - 1);
 
-        // Current velocity randomized with noise.
-        var noise = Mathf.PerlinNoise(Time.time, noiseOffset) * 2.0f - 1.0f;
-        var velocity = controller.velocity * (1.0f + noise * controller.velocityVariation);
+        randomize.Normalize();
+        Vector3 flockCenter = boidController.flockCenter;
+        Vector3 flockVelocity = boidController.flockVelocity;
+        Vector3 follow = chasee.transform.localPosition;
 
-        // Initializes the vectors.
-        var separation = Vector3.zero;
-        var alignment = controller.transform.forward;
-        var cohesion = controller.transform.position;
+        flockCenter = flockCenter - transform.localPosition;
+        flockVelocity = flockVelocity - GetComponent<Rigidbody>().velocity;
+        follow = follow - transform.localPosition;
 
-        // Looks up nearby boids.
-        var nearbyBoids = Physics.OverlapSphere(currentPosition, controller.neighborDist, controller.searchLayer);
-
-        // Accumulates the vectors.
-        foreach (var boid in nearbyBoids)
-        {
-            if (boid.gameObject == gameObject) continue;
-            var t = boid.transform;
-            separation += GetSeparationVector(t);
-            alignment += t.forward;
-            cohesion += t.position;
-        }
-
-        var avg = 1.0f / nearbyBoids.Length;
-        alignment *= avg;
-        cohesion *= avg;
-        cohesion = (cohesion - currentPosition).normalized;
-
-        // Calculates a rotation from the vectors.
-        var direction = separation + alignment + cohesion;
-        var rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
-
-        // Applys the rotation with interpolation.
-        if (rotation != currentRotation)
-        {
-            var ip = Mathf.Exp(-controller.rotationCoeff * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(rotation, currentRotation, ip);
-        }
-
-        // Moves forawrd.
-        transform.position = currentPosition + transform.forward * (velocity * Time.deltaTime);
+        return (flockCenter + flockVelocity + follow * 2 + randomize * randomness);
     }
 }

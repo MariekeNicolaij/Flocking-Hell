@@ -34,9 +34,7 @@ Levelmanager die de algemene difficulty/moneycost/aigroup/aigroupcount multiplie
 Alleen vliegende ai laten flocken
 meerdere soorten ai erin (lopende niet flocken ofcourse, die kunnen wel soort minibosses worden ofzo)
 Per 3 levels de ai groepen vergroten per 5
-
-
-Flocking hoe?
+Een collider laat de ai gek roteren ofzo
 
 
 Upgradeshop ideeen

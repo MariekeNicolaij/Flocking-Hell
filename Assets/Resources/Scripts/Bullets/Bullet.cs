@@ -41,7 +41,6 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-            Debug.Log(other.collider.name);
         if (other.collider.tag == "AI")
         {
             Debug.Log("AI");
