@@ -6,7 +6,7 @@ public class LaserSight : MonoBehaviour
 {
     public GameObject targetForward;
     LineRenderer laser;
-    Color laserColor = new Color(255, 0, 0);
+    Color laserColor = new Color(100, 0, 255);
 
     float laserLength = 3;
     float laserWidth = 0.01f;

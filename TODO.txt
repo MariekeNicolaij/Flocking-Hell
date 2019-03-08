@@ -35,9 +35,15 @@ Alleen vliegende ai laten flocken
 meerdere soorten ai erin (lopende niet flocken ofcourse, die kunnen wel soort minibosses worden ofzo)
 Per 3 levels de ai groepen vergroten per 5
 Een collider laat de ai gek roteren ofzo
+Miniboss nadat flockingai dood is?
+Spawnpoint weghalen als die al word gebruikt
+text met hoeveel ai er nog is
+Dark theme(hoeken)
+Mist
 
 
 Upgradeshop ideeen
+Begin geld maar zo dat je maar 1 ding kunt kopen of 2
 Laser length
 Bullet speed
 damage

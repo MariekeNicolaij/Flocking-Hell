@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5502665039118379381}
   - component: {fileID: 7419291476946839667}
   - component: {fileID: 3395825419168822954}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PA_DroneBladeRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3668476122098831620}
   - component: {fileID: 8188549428145158250}
   - component: {fileID: 585072621633049669}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PA_Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759401183188735370}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.00047037602, z: 0.07770232}
+  m_LocalPosition: {x: -0, y: 0.7, z: 0.07770232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8659390215801043577}
@@ -169,7 +169,8 @@ GameObject:
   - component: {fileID: 6315039412557554389}
   - component: {fileID: 8293304999679302258}
   - component: {fileID: 6625479124141281672}
-  m_Layer: 0
+  - component: {fileID: 5067873913024403104}
+  m_Layer: 10
   m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +225,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &8293304999679302258
 MonoBehaviour:
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7bd3ca446ae6a4995e382e6cca6f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groupIndex: 0
 --- !u!65 &6625479124141281672
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -247,10 +249,32 @@ BoxCollider:
   m_GameObject: {fileID: 2200658557626997448}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7821393, y: 0.23237252, z: 0.68379605}
-  m_Center: {x: 0.006092772, y: 0.04686272, z: 0.0067107677}
+  m_Size: {x: 0.7821393, y: 0.9780023, z: 0.68379605}
+  m_Center: {x: 0.006092787, y: 0.41967762, z: 0.0067107677}
+--- !u!195 &5067873913024403104
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200658557626997448}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5636893632183263926
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +286,7 @@ GameObject:
   - component: {fileID: 4759068811234671575}
   - component: {fileID: 2290381943095994147}
   - component: {fileID: 1765157411819708235}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PA_DroneWingRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +364,7 @@ GameObject:
   - component: {fileID: 8659390215801043577}
   - component: {fileID: 8408944050003276494}
   - component: {fileID: 436458444733988270}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PA_DroneWingLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +442,7 @@ GameObject:
   - component: {fileID: 3490349954975897255}
   - component: {fileID: 5088584843121587241}
   - component: {fileID: 9098781374874610354}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PA_DroneBladeLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}

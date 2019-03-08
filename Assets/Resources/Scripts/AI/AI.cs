@@ -5,23 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class AI : MonoBehaviour
 {
+    Rigidbody rBody;
+    public int groupIndex;
     bool inited = false;
     float minVelocity;
     float maxVelocity;
-    float randomness;
-    GameObject chasee;
-
-    void Start()
-    {
-
-    }
+    
 
     public void SetController()
     {
+        rBody = GetComponent<Rigidbody>();
         minVelocity = AIManager.instance.minVelocity;
         maxVelocity = AIManager.instance.maxVelocity;
-        randomness = AIManager.instance.randomness;
-        chasee = AIManager.instance.chasee;
 
         inited = true;
         StartCoroutine("BoidSteering");
@@ -33,38 +28,43 @@ public class AI : MonoBehaviour
         {
             if (inited)
             {
-                GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity + Calc() * Time.deltaTime;
+                rBody.velocity = rBody.velocity + Calc() * Time.deltaTime;
 
                 // enforce minimum and maximum speeds for the boids
                 float speed = GetComponent<Rigidbody>().velocity.magnitude;
                 if (speed > maxVelocity)
                 {
-                    GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized * maxVelocity;
+                    rBody.velocity = rBody.velocity.normalized * maxVelocity;
                 }
                 else if (speed < minVelocity)
                 {
-                    GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized * minVelocity;
+                    rBody.velocity = rBody.velocity.normalized * minVelocity;
                 }
             }
 
-            float waitTime = Random.Range(0.3f, 0.5f);
+            //Vector3 p = transform.position;
+            //p.y = 0.7f;
+            //transform.position = p;
+            float waitTime = Random.Range(0.2f, 0.5f);
             yield return new WaitForSeconds(waitTime);
         }
     }
+
     private Vector3 Calc()
     {
-        AIManager boidController = GameObject.Find("Scripts").GetComponent<AIManager>();
+        if (AIManager.instance.flockCenter.Length == 0 || AIManager.instance.flockVelocity.Length == 0)
+            return Vector3.zero;
         Vector3 randomize = new Vector3((Random.value * 2) - 1, (Random.value * 2) - 1, (Random.value * 2) - 1);
 
         randomize.Normalize();
-        Vector3 flockCenter = boidController.flockCenter;
-        Vector3 flockVelocity = boidController.flockVelocity;
-        Vector3 follow = chasee.transform.localPosition;
+        Vector3 flockCenter = AIManager.instance.flockCenter[groupIndex];
+        Vector3 flockVelocity = AIManager.instance.flockVelocity[groupIndex];
+        Vector3 follow = AIManager.instance.target.transform.position;
 
-        flockCenter = flockCenter - transform.localPosition;
-        flockVelocity = flockVelocity - GetComponent<Rigidbody>().velocity;
-        follow = follow - transform.localPosition;
+        flockCenter -= transform.position;
+        flockVelocity -= rBody.velocity;
+        follow -= transform.position;
 
-        return (flockCenter + flockVelocity + follow * 2 + randomize * randomness);
+        return (flockCenter + flockVelocity + follow * 2 + randomize * AIManager.instance.randomness);
     }
 }

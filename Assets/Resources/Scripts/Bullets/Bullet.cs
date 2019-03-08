@@ -10,12 +10,12 @@ public class Bullet : MonoBehaviour
 
     LineRenderer line;
     Color lineColor = new Color(0, 100, 255);
-    Vector3 startPosition;
     float lineLength = 1.5f;
+
+    Vector3 startPosition;
 
     float minDamage, maxDamage, actualDamage;
     float bulletAliveTime = 1;
-
 
     public void InitiateBullet()
     {
@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
         line = gameObject.AddComponent<LineRenderer>();
         line.material.color = lineColor;
         line.widthMultiplier = 0.0015f;
+
         startPosition = transform.position;
     }
 
@@ -46,6 +47,7 @@ public class Bullet : MonoBehaviour
             Debug.Log("AI");
         }
 
+        Camera.main.gameObject.GetComponent<Follow>().rumbleTime += 0.1f;
         PlayDestroyAnimation();
     }
 

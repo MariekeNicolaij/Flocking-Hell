@@ -29,12 +29,12 @@ public class EnvironmentManager : MonoBehaviour
         }
         if (!parent)
         {
-            parent = terrain.transform;
+            parent = transform;
         }
-        if (platformPrefabs.Count == 0 || !parent || !terrain)
+        if (platformPrefabs.Count == 0)
         {
-            Destroy(this);
             Debug.LogError("No platforms/parent/terrain selected!");
+            Destroy(this);
         }
 
         maxTerrainX = terrain.terrainData.size.x;
