@@ -58,7 +58,7 @@ public class AIManager : MonoBehaviour
 
             ai.transform.parent = AIParent.transform;
             ai.transform.localPosition = position;
-            ai.GetComponent<AI>().SetController(gameObject);
+            ai.GetComponent<AI>().SetController();
             currentFlockingAIList.Add(ai);
         }
     }
@@ -70,11 +70,17 @@ public class AIManager : MonoBehaviour
 
         foreach (GameObject ai in currentFlockingAIList)
         {
-            theCenter = theCenter + ai.transform.localPosition;
-            theVelocity = theVelocity + ai.GetComponent<Rigidbody>().velocity;
+            theCenter += ai.transform.localPosition;
+            theVelocity += ai.GetComponent<Rigidbody>().velocity;
+
         }
 
         flockCenter = theCenter / (flockSize);
         flockVelocity = theVelocity / (flockSize);
+
+        Debug.Log("theCenter: " + theCenter);
+        Debug.Log("theVelocity: " + theVelocity);
+        Debug.Log("flockCenter: " + flockCenter);
+        Debug.Log("flockVelocity: " + flockVelocity);
     }
 }

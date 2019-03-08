@@ -1,1 +1,0 @@
-<dataStorage><flockingRules><flockingRule name="Alignment" minDist="0" maxDist="0" scalar="0" type="flockingRule" /><flockingRule name="Cohesion" minDist="0" maxDist="0" scalar="0" type="flockingRule" /><flockingRule name="Separation" minDist="0" maxDist="0" scalar="0" type="flockingRule" /></flockingRules><speed value="100" /></dataStorage>

@@ -5,24 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class AI : MonoBehaviour
 {
-    GameObject Controller;
     bool inited = false;
     float minVelocity;
     float maxVelocity;
     float randomness;
     GameObject chasee;
 
-    //void Start()
-    //{
-    //}
-
-    public void SetController(GameObject theController)
+    void Start()
     {
-        Controller = theController;
+
+    }
+
+    public void SetController()
+    {
         minVelocity = AIManager.instance.minVelocity;
         maxVelocity = AIManager.instance.maxVelocity;
         randomness = AIManager.instance.randomness;
         chasee = AIManager.instance.chasee;
+
         inited = true;
         StartCoroutine("BoidSteering");
     }
