@@ -42,10 +42,10 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.collider.tag == "AI")
-        {
-            Debug.Log("AI");
-        }
+        if (other.collider.tag == "AI Flocking")
+            AIManager.instance.DestroyAI(other.gameObject, true);
+        if (other.collider.tag == "AI Normal")
+            AIManager.instance.DestroyAI(other.gameObject, false);
 
         Camera.main.gameObject.GetComponent<Follow>().rumbleTime += 0.1f;
         PlayDestroyAnimation();

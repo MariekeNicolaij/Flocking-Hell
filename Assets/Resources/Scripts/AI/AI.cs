@@ -5,12 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class AI : MonoBehaviour
 {
+    public List<GameObject> droneBlades;
     Rigidbody rBody;
+
     public int groupIndex;
-    bool inited = false;
     float minVelocity;
     float maxVelocity;
-    
+
 
     public void SetController()
     {
@@ -18,7 +19,6 @@ public class AI : MonoBehaviour
         minVelocity = AIManager.instance.minVelocity;
         maxVelocity = AIManager.instance.maxVelocity;
 
-        inited = true;
         StartCoroutine("BoidSteering");
     }
 
@@ -26,20 +26,17 @@ public class AI : MonoBehaviour
     {
         while (true)
         {
-            if (inited)
-            {
-                rBody.velocity = rBody.velocity + Calc() * Time.deltaTime;
+            rBody.velocity = rBody.velocity + Calc() * Time.deltaTime;
 
-                // enforce minimum and maximum speeds for the boids
-                float speed = GetComponent<Rigidbody>().velocity.magnitude;
-                if (speed > maxVelocity)
-                {
-                    rBody.velocity = rBody.velocity.normalized * maxVelocity;
-                }
-                else if (speed < minVelocity)
-                {
-                    rBody.velocity = rBody.velocity.normalized * minVelocity;
-                }
+            // enforce minimum and maximum speeds for the boids
+            float speed = GetComponent<Rigidbody>().velocity.magnitude;
+            if (speed > maxVelocity)
+            {
+                rBody.velocity = rBody.velocity.normalized * maxVelocity;
+            }
+            else if (speed < minVelocity)
+            {
+                rBody.velocity = rBody.velocity.normalized * minVelocity;
             }
 
             //Vector3 p = transform.position;
@@ -65,6 +62,6 @@ public class AI : MonoBehaviour
         flockVelocity -= rBody.velocity;
         follow -= transform.position;
 
-        return (flockCenter + flockVelocity + follow * 2 + randomize * AIManager.instance.randomness);
+        return (flockCenter + flockVelocity + follow * 2 + randomize);
     }
 }

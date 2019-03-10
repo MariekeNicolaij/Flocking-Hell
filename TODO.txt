@@ -1,48 +1,53 @@
-Bewegende mist voor startscherm
-Achievements
-Random map die word gegenereerd met stukken map
-Score = geld, geld is score
-Mooie doorzichtig rode dunne laserpointer
-Upgradeshop dit ook je current stats laat zien
-Controls schermpje
-Als je met 2 triggers schiet de dual schiet animatie filmpje gebruiken en anders de single animatie
-Lasersight checken met raycast of ie iets hit en dan line afbreken
-Bullets despawnen gelijk
-Alleen 90 graden kunnen schieten?
-Comments!
-Kleinere bullets
-Bulletjes met een lichtlijntje erachter
-Hide cursor ingame
-Geen timers maar Invoke?
-Controller support
-Project op github
-controller rotatie
-font gebruiken (al in projectfolder)
-Doodanimatie
-Schietanimatie
-Krijg damage animatie
-Muren op de edges
-Explosies als enemies dood gaan
-bullet destroy animatie?
-Ai levens
-Ai groepen
-Wave system
-Muur spooky maken
-navmeshobstacle op alle platforms zetten en carving aanvinken
-Dikke levensbalk onderin
-Levelmanager die de algemene difficulty/moneycost/aigroup/aigroupcount multiplier heeft
-Alleen vliegende ai laten flocken
-meerdere soorten ai erin (lopende niet flocken ofcourse, die kunnen wel soort minibosses worden ofzo)
-Per 3 levels de ai groepen vergroten per 5
-Een collider laat de ai gek roteren ofzo
+--------AI---------
+AI speed hoger per level
 Miniboss nadat flockingai dood is?
-Spawnpoint weghalen als die al word gebruikt
-text met hoeveel ai er nog is
+Per 3 levels de flockSize vergroten per 5
+Meer AI models (Vliegend en normaal)
+Alleen vliegende ai laten flocken
+AI levens
+Explosies als enemies dood gaan?
+Goed laten roteren naar waar ze naartoe willen
+Pathfinding :(
+Klein beetje licht geven
+Meer damage per 10 levels?
+
+
+-------Game--------
+Comments!
+Achievements
 Dark theme(hoeken)
 Mist
+NavMeshObstacle op alle platforms zetten en carving aanvinken
+Random map die word gegenereerd met stukken map
+Walls spooky maken
+Wave system
+Levelmanager die de algemene difficulty/moneycost/aigroup/aigroupcount multiplier heeft
+Score = geld, geld is score
 
+-------Player------
+Krijg damage animatie
+Doodanimatie
+Alleen 90 graden kunnen schieten?
+Damage receive timeout
+Health generation
+Knockback
 
-Upgradeshop ideeen
+--------UI---------
+Text met hoeveel ai er nog is
+Dikke levensbalk onderin
+Font gebruiken (al in projectfolder)
+Controller support
+Hide cursor ingame
+Start scherm met gelijk de controls daarop en audio opties en delete save knopje. Hoef geen ingewikkeld ui systeem te maken
+Bewegende mist voor startscherm
+Hitpoints
+AI levens balletje
+Upgradeshop aan het begin van elke wave
+Cursor voor alles behalve Game.unity
+Crosshair voor Game.unity
+
+-----Upgradeshop----
+Upgradeshop dit ook je current stats laat zien
 Begin geld maar zo dat je maar 1 ding kunt kopen of 2
 Laser length
 Bullet speed
@@ -52,4 +57,12 @@ bullet alive time
 laser sight length
 camerauitzoom
 Health
+Health generation
 Knockback
+
+-----Te Testen-----
+Wave nummers
+Of gekochte upgrade wel werken
+Verschillende AI spawns per aantal waves
+Levensbalk
+Waardes van de StatsManager

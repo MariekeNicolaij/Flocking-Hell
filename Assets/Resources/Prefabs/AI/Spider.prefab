@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8735891068964000762}
   m_Layer: 10
   m_Name: Spider
-  m_TagString: Untagged
+  m_TagString: AI Normal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

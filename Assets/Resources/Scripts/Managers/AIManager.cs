@@ -10,27 +10,30 @@ public class AIManager : MonoBehaviour
     public Terrain terrain;
 
     [HideInInspector]
-    public List<List<GameObject>> currentFlockingAIList = new List<List<GameObject>>(); // Keep track of the ai groups inside another list
+    public List<List<GameObject>> aliveFlockingAI = new List<List<GameObject>>(); // Keep track of the ai groups 
     [HideInInspector]
-    public List<GameObject> currentNormalAIList = new List<GameObject>();
+    public List<GameObject> aliveNormalAI = new List<GameObject>();
+
     public List<GameObject> flockingAIPrefab, normalAIPrefab;
 
     [HideInInspector]
-    public List<Vector3> groupSpawnPoints;
+    public List<Vector3> groupSpawnPoints;  // Spawn points for the group
 
     public GameObject target;
     public GameObject AIParent;
 
-    public int flockGroupAmount = 4;
-    public int flockSize = 10;
+    [HideInInspector]
+    public int flockGroupAmount = 3;    // How many groups
+    [HideInInspector]
+    public int flockSize = 10;          // AI per group
 
-    public float minVelocity = 5;
-    public float maxVelocity = 20;
-    public float randomness = 1;
+    public float minVelocity = 1;       // Min speed
+    public float maxVelocity = 2;       // Max speed
 
     public Vector3[] flockCenter;       // Center of the flocking groups
     public Vector3[] flockVelocity;     // Average velocity of the flocking groups
 
+    public int aliveAICount;
 
     void Awake()
     {
@@ -107,10 +110,11 @@ public class AIManager : MonoBehaviour
                 script.groupIndex = i;
                 script.SetController();
 
+                aliveAICount++;
                 flockGroup.Add(ai);
             }
 
-            currentFlockingAIList.Add(flockGroup);
+            aliveFlockingAI.Add(flockGroup);
         }
     }
 
@@ -126,18 +130,32 @@ public class AIManager : MonoBehaviour
         if (flockVelocity.Length == 0)
             flockVelocity = new Vector3[flockGroupAmount];
 
-        for (int i = 0; i < flockGroupAmount; i++)
+        for (int i = 0; i < aliveFlockingAI.Count; i++)
         {
             Vector3 center = Vector3.zero;
             Vector3 velocity = Vector3.zero;
-            foreach (GameObject ai in currentFlockingAIList[i])
+            foreach (GameObject ai in aliveFlockingAI[i])
             {
                 center += ai.transform.position;
                 velocity += ai.GetComponent<Rigidbody>().velocity;
             }
 
-            flockCenter[i] = center / flockSize;
-            flockVelocity[i] = velocity / flockSize;
+            flockCenter[i] = center / aliveFlockingAI[i].Count;
+            flockVelocity[i] = velocity / aliveFlockingAI[i].Count;
         }
+    }
+
+    public void DestroyAI(GameObject ai, bool flocking)
+    {
+        if (flocking)
+        {
+            int groupIndex = ai.GetComponent<AI>().groupIndex;
+            aliveFlockingAI[groupIndex].Remove(ai);
+
+                aliveAICount--;
+        }
+        else
+            aliveNormalAI.Remove(ai);
+        Destroy(ai);
     }
 }

@@ -25,7 +25,6 @@ public class Follow : MonoBehaviour
 
         if (rumbleTime > 0)
         {
-            Debug.Log("Rumble");
             Camera.main.transform.position += Random.insideUnitSphere * rumbleAmount* Time.deltaTime;
             rumbleTime -= Time.deltaTime;
         }

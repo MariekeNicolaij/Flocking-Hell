@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 5067873913024403104}
   m_Layer: 10
   m_Name: Drone
-  m_TagString: Untagged
+  m_TagString: AI Flocking
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,6 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7bd3ca446ae6a4995e382e6cca6f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  droneBlades:
+  - {fileID: 9030956373531781535}
+  - {fileID: 1091822273411177962}
   groupIndex: 0
 --- !u!65 &6625479124141281672
 BoxCollider:
