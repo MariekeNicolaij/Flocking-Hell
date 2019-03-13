@@ -12,14 +12,26 @@ public class AI : MonoBehaviour
     float minVelocity;
     float maxVelocity;
 
+    public float health;
+    public float minDamage, maxDamage;
+
 
     public void SetController()
     {
         rBody = GetComponent<Rigidbody>();
-        minVelocity = AIManager.instance.minVelocity;
-        maxVelocity = AIManager.instance.maxVelocity;
+
+        GetStats();
 
         StartCoroutine("BoidSteering");
+    }
+
+    void GetStats()
+    {
+        health = StatsManager.instance.aiHealth;
+        minDamage = StatsManager.instance.aiMinDamage;
+        maxDamage = StatsManager.instance.aiMaxDamage;
+        minVelocity = AIManager.instance.minVelocity;
+        maxVelocity = AIManager.instance.maxVelocity;
     }
 
     IEnumerator BoidSteering()
@@ -39,15 +51,16 @@ public class AI : MonoBehaviour
                 rBody.velocity = rBody.velocity.normalized * minVelocity;
             }
 
-            //Vector3 p = transform.position;
-            //p.y = 0.7f;
-            //transform.position = p;
             float waitTime = Random.Range(0.2f, 0.5f);
             yield return new WaitForSeconds(waitTime);
         }
     }
 
-    private Vector3 Calc()
+    /// <summary>
+    /// Calculates
+    /// </summary>
+    /// <returns></returns>
+    Vector3 Calc()
     {
         if (AIManager.instance.flockCenter.Length == 0 || AIManager.instance.flockVelocity.Length == 0)
             return Vector3.zero;
@@ -63,5 +76,14 @@ public class AI : MonoBehaviour
         follow -= transform.position;
 
         return (flockCenter + flockVelocity + follow * 2 + randomize);
+    }
+
+    /// <summary>
+    /// Does random calculated damage based on min and max value
+    /// </summary>
+    /// <returns></returns>
+    public int Damage()
+    {
+        return Mathf.RoundToInt(Random.Range(minDamage, maxDamage));
     }
 }

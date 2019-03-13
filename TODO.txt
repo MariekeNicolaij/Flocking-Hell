@@ -1,3 +1,6 @@
+MSCW -> PLAN inleveren
+
+
 --------AI---------
 AI speed hoger per level
 Miniboss nadat flockingai dood is?
@@ -10,7 +13,9 @@ Goed laten roteren naar waar ze naartoe willen
 Pathfinding :(
 Klein beetje licht geven
 Meer damage per 10 levels?
-
+Als group minder dan 5 ofzo heeft dan samen voegen met de kleinste group
+Flocking force applyen if obstacles
+Seperation code, ze moeten wel een beetje door elkaar kunnen
 
 -------Game--------
 Comments!
@@ -27,10 +32,11 @@ Score = geld, geld is score
 -------Player------
 Krijg damage animatie
 Doodanimatie
-Alleen 90 graden kunnen schieten?
+Alleen 180 graden kunnen schieten?
 Damage receive timeout
 Health generation
 Knockback
+Rood flashscherm if damaged
 
 --------UI---------
 Text met hoeveel ai er nog is
@@ -47,22 +53,16 @@ Cursor voor alles behalve Game.unity
 Crosshair voor Game.unity
 
 -----Upgradeshop----
-Upgradeshop dit ook je current stats laat zien
+Checks bouwen voor dingen die niet onder 0 mogen komen
+Upgradeshop dit ook je current stats laat zien en misschien de waardes een beetje faken zodat het lijkt alsof ze allemaal van 1 tot 10 ofzo zijn
 Begin geld maar zo dat je maar 1 ding kunt kopen of 2
-Laser length
-Bullet speed
-damage
-shootdelay
-bullet alive time
-laser sight length
-camerauitzoom
-Health
-Health generation
-Knockback
 
------Te Testen-----
+-----Wave system----
+Wat moet er moeilijker gemaakt worden?
+
+-----Te Testen------
 Wave nummers
 Of gekochte upgrade wel werken
 Verschillende AI spawns per aantal waves
 Levensbalk
-Waardes van de StatsManager
+Waardes van de StatsManager of ze wel lekker spelen

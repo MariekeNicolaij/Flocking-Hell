@@ -27,15 +27,15 @@ public class AIManager : MonoBehaviour
     [HideInInspector]
     public int flockSize = 10;          // AI per group
 
-    public float minVelocity = 1;       // Min speed
-    public float maxVelocity = 2;       // Max speed
+    public float minVelocity;       // Min speed
+    public float maxVelocity;       // Max speed
 
     public Vector3[] flockCenter;       // Center of the flocking groups
     public Vector3[] flockVelocity;     // Average velocity of the flocking groups
 
     public int aliveAICount;
 
-    void Awake()
+    void Start()
     {
         instance = this;
 
@@ -52,6 +52,12 @@ public class AIManager : MonoBehaviour
             Debug.LogError("No AI prefab(s) configured. (Please configure them both)");
             Destroy(this);
         }
+
+        flockGroupAmount = StatsManager.instance.aiGroupSize;
+        flockSize = StatsManager.instance.aiFlockSize;
+
+        minVelocity = StatsManager.instance.aiMinVelocity;
+        maxVelocity = StatsManager.instance.aiMaxVelocity;
 
         GenerateSpawnPoints();
         SpawnFlockingAIGroups();
@@ -152,7 +158,7 @@ public class AIManager : MonoBehaviour
             int groupIndex = ai.GetComponent<AI>().groupIndex;
             aliveFlockingAI[groupIndex].Remove(ai);
 
-                aliveAICount--;
+            aliveAICount--;
         }
         else
             aliveNormalAI.Remove(ai);

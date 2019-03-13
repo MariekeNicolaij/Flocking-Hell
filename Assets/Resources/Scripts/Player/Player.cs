@@ -14,9 +14,13 @@ public class Player : MonoBehaviour
 
     // Player
     Rigidbody rBody;
+
+    float damageDelay = 1;
+    bool isDamaged;
     bool dead;
 
-    int health, maxHealth;
+    bool isGeneratingHealth;
+    int health, maxHealth, healthGeneration, healthGenerationDelay;
     int knockbackForce;
     int score;
     int money;
@@ -25,9 +29,8 @@ public class Player : MonoBehaviour
 
     // Shooting
     bool canShootLeft = true, canShootRight = true;
+    float bulletSpeed = 200;
     float shootDelayInSeconds = 0.25f;
-
-    float shootSpeed = 200;
 
 
     void Awake()
@@ -35,16 +38,57 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool("Aiming", true);
         rBody = GetComponent<Rigidbody>();
+
+        GetStats();
+    }
+
+    void GetStats()
+    {
+        maxHealth = StatsManager.instance.health;
+        healthGeneration = StatsManager.instance.healthGeneration;
+        healthGenerationDelay = StatsManager.instance.healthGenerationDelay;
+
+        score = StatsManager.instance.score;
+
+        bulletSpeed = StatsManager.instance.bulletSpeed;
+        shootDelayInSeconds = StatsManager.instance.shootDelay;
+
+        knockbackForce = StatsManager.instance.knockbackForce;
+
+        health = maxHealth;
     }
 
     void Update()
     {
+        RegenerateHealth();
+    }
 
+    void RegenerateHealth()
+    {
+        if (isGeneratingHealth)
+            return;
+
+        isGeneratingHealth = true;
+
+        if (health < maxHealth)
+            health += healthGeneration;
+        else if (health > maxHealth)    // Dont want it to go over max lol
+            health = maxHealth;
+
+        Invoke("RegenerateHealthDelay", healthGenerationDelay);
+    }
+
+    void RegenerateHealthDelay()
+    {
+        isGeneratingHealth = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // enemy shit?
+        if (other.gameObject.layer == Layer.AI)
+        {
+            ReceiveDamage(other.GetComponent<AI>());
+        }
     }
 
     // Called in PlayerInput
@@ -87,12 +131,10 @@ public class Player : MonoBehaviour
         Vector3 startPosition = shootingPistol.transform.position;
         Vector3 direction = transform.forward;
 
-        Bullet bullet = BulletManager.instance.SpawnBullet();
-        bullet.transform.position = startPosition;
-        bullet.transform.eulerAngles = new Vector3(bullet.transform.eulerAngles.x, transform.eulerAngles.y, bullet.transform.eulerAngles.z);
+        Bullet bullet = BulletManager.instance.SpawnBullet(startPosition, transform.eulerAngles.y);
 
         bullet.rBody.velocity = Vector3.zero;
-        bullet.rBody.AddForce(direction * shootSpeed);
+        bullet.rBody.AddForce(direction * bulletSpeed);
 
         string shootDelayMethodName = (shootLeft) ? "ShootDelayLeft" : "ShootDelayRight";
         Invoke(shootDelayMethodName, shootDelayInSeconds);
@@ -106,5 +148,22 @@ public class Player : MonoBehaviour
     void ShootDelayRight()
     {
         canShootRight = true;
+    }
+
+    void ReceiveDamage(AI ai)
+    {
+        if (isDamaged)
+            return;
+        isDamaged = true;
+
+        health -= ai.Damage();
+        UIManager.instance.UpdateHealthBar(health, maxHealth);
+
+        Invoke("DamageDelay", damageDelay);
+    }
+
+    void DamageDelay()
+    {
+        isDamaged = false;
     }
 }

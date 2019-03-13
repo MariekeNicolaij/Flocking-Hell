@@ -7,16 +7,16 @@ public class BulletManager : MonoBehaviour
 
     public Bullet bulletPrefab;
 
-    void Awake()
+    void Start()
     {
         instance = this;
     }
 
-    public Bullet SpawnBullet()
+    public Bullet SpawnBullet(Vector3 startPosition, float eulerY)
     {
         Bullet bullet = Instantiate(bulletPrefab);
 
-        bullet.InitiateBullet();
+        bullet.InitiateBullet(startPosition, eulerY);
 
         return bullet;
     }

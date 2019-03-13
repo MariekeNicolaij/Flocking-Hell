@@ -15,8 +15,7 @@ public class EnvironmentManager : MonoBehaviour
 
     Vector3 spawnStartPosition;
 
-    int positionOffset = 10, rotatenOffset = 90;
-    float currentX = 0, currentZ = 0;
+    int positionOffset = 10;
     float maxTerrainX, maxTerrainZ;
 
     void Start()

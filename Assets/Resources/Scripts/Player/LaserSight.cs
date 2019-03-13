@@ -9,8 +9,8 @@ public class LaserSight : MonoBehaviour
     Color laserColor = new Color(100, 0, 255);
 
     [HideInInspector]
-    public float laserLength = 3;
-    float laserWidth = 0.01f;
+    public float laserLength;
+    float laserWidth = 0.02f;
 
 
     void Start()
@@ -22,6 +22,8 @@ public class LaserSight : MonoBehaviour
 
     void SetLaser()
     {
+        laserLength = StatsManager.instance.laserLength;
+
         laser = gameObject.AddComponent<LineRenderer>();
         laser.material.color = laserColor;
         laser.widthMultiplier = laserWidth;
@@ -46,7 +48,7 @@ public class LaserSight : MonoBehaviour
         direction.y = 0;
 
         if (Physics.Raycast(transform.position, direction, out hit, laserLength))
-            if (hit.collider.tag != "Player")
+            if (hit.collider.gameObject.layer != Layer.Player && hit.collider.gameObject.layer != Layer.Bullet)
                 return hit.point;
 
         return transform.position + (direction * laserLength);

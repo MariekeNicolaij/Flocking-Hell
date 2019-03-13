@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
     public Image wavePanel;
     bool wavePanelAnimated;
     float disableWavePanelDelay = 2;
@@ -12,12 +13,13 @@ public class UIManager : MonoBehaviour
     public Image healthBarWrap;
     public Image healthBar;
     public Text healthText;
-    float healthBarWidth;
+    Color healthBarStartColor;
 
 
     void Start()
     {
-        healthBarWidth = healthBarWrap.rectTransform.sizeDelta.x;
+        instance = this;
+        healthBarStartColor = healthBar.color;
         Invoke("DisableWavePanel", disableWavePanelDelay);
     }
 
@@ -33,7 +35,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealthBar(int health, int maxHealth)
     {
-        healthBarWrap.rectTransform.sizeDelta = new Vector2(health / maxHealth * healthBarWidth, healthBarWrap.rectTransform.sizeDelta.y);
+        healthBar.color = Color.Lerp(Color.red, healthBarStartColor, (float)health / (float)maxHealth); // Casten naar float omdat int delen door int voor een float is 0
         healthText.text = health + "/" + maxHealth;
     }
 }

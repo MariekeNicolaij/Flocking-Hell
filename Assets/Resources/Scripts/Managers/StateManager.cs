@@ -3,6 +3,7 @@ using System.Collections;
 
 public class StateManager
 {
+    public static StateManager instance;
     public GameObject owner;
     public State currentState;
 
@@ -16,6 +17,7 @@ public class StateManager
 
     public void Start()
     {
+        instance = this;
         ChangeState(defaultState);
     }
 

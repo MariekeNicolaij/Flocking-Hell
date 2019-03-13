@@ -10,31 +10,49 @@ public class Bullet : MonoBehaviour
 
     LineRenderer line;
     Color lineColor = new Color(0, 100, 255);
-    float lineLength = 1.5f;
 
     Vector3 startPosition;
 
-    float minDamage, maxDamage, actualDamage;
-    float bulletAliveTime = 1;
+    float minDamage, maxDamage;
+    float bulletAliveTime;
 
-    public void InitiateBullet()
+    public void InitiateBullet(Vector3 startPosition, float eulerY)
     {
+        this.startPosition = startPosition;
+        transform.position = startPosition;
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
+
         rBody = GetComponent<Rigidbody>();
+    
+        GetStats();
+
+        particles = GetComponentInChildren<ParticleSystem>();
+
+        line = gameObject.AddComponent<LineRenderer>();
+        line.material.color = lineColor;
+        line.widthMultiplier = 0.005f;
 
         Invoke("DestroyBullet", bulletAliveTime);
     }
 
     void Start()
     {
-        particles = GetComponentInChildren<ParticleSystem>();
-        line = gameObject.AddComponent<LineRenderer>();
-        line.material.color = lineColor;
-        line.widthMultiplier = 0.0015f;
+        // 
+    }
 
-        startPosition = transform.position;
+    void GetStats()
+    {
+        bulletAliveTime = StatsManager.instance.bulletAliveTime;
+        minDamage = StatsManager.instance.minDamage;
+        maxDamage = StatsManager.instance.maxDamage;
     }
 
     void Update()
+    {
+        AnimateLine();
+    }
+
+    void AnimateLine()
     {
         // Want to keep the line right behind the bullet
         line.SetPositions(new Vector3[2] { startPosition, transform.position });
@@ -42,13 +60,26 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.collider.tag == "AI Flocking")
-            AIManager.instance.DestroyAI(other.gameObject, true);
-        if (other.collider.tag == "AI Normal")
-            AIManager.instance.DestroyAI(other.gameObject, false);
+        if (other.gameObject.layer == Layer.AI)
+        {
+            if (other.collider.tag == "AI Flocking")
+                AIManager.instance.DestroyAI(other.gameObject, true);
+            if (other.collider.tag == "AI Normal")
+                AIManager.instance.DestroyAI(other.gameObject, false);
+        }
 
+        // Rumble babyy
         Camera.main.gameObject.GetComponent<Follow>().rumbleTime += 0.1f;
         PlayDestroyAnimation();
+    }
+
+    /// <summary>
+    /// Does random calculated damage based on min and max value
+    /// </summary>
+    /// <returns></returns>
+    public int Damage()
+    {
+        return Mathf.RoundToInt(Random.Range(minDamage, maxDamage));
     }
 
     void PlayDestroyAnimation()

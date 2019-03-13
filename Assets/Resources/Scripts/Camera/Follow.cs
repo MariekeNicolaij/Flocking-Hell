@@ -6,7 +6,7 @@ public class Follow : MonoBehaviour
 {
     public Transform target;
 
-    public Vector3 positionOffest = new Vector3(0, 4, -3);
+    public Vector3 positionOffset;
     public Vector3 rotation = new Vector3(45, 0, 0);
 
     public float rumbleTime = 0;
@@ -16,12 +16,17 @@ public class Follow : MonoBehaviour
     {
         if (!target)
             target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (transform.parent)
+            transform.SetParent(null);
+
+        positionOffset = new Vector3(0, StatsManager.instance.cameraZoom, -StatsManager.instance.cameraZoom);
         transform.eulerAngles = rotation;
     }
 
     void Update()
     {
-        transform.position = target.position + positionOffest;
+        transform.position = target.position + positionOffset;
 
         if (rumbleTime > 0)
         {
