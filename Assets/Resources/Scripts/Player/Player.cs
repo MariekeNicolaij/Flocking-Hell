@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerInputController))]
@@ -14,18 +15,20 @@ public class Player : MonoBehaviour
 
     // Player
     Rigidbody rBody;
+    float moveSpeed = 2f;
 
+    // Damaged
     float damageDelay = 1;
     bool isDamaged;
-    bool dead;
+    bool isDead;
 
+    // Health
     bool isGeneratingHealth;
-    int health, maxHealth, healthGeneration, healthGenerationDelay;
-    int knockbackForce;
-    int score;
-    int money;
+    public int health, maxHealth;
+    int healthGeneration, healthGenerationDelay;
 
-    float moveSpeed = 2f;
+    // Score
+    public int score;
 
     // Shooting
     bool canShootLeft = true, canShootRight = true;
@@ -33,13 +36,20 @@ public class Player : MonoBehaviour
     float shootDelayInSeconds = 0.25f;
 
 
-    void Awake()
+    void Start()
     {
+        // Stats
+        GetStats();
+        
+        // Animator
         animator = GetComponent<Animator>();
         animator.SetBool("Aiming", true);
-        rBody = GetComponent<Rigidbody>();
 
-        GetStats();
+        // Player
+        rBody = GetComponent<Rigidbody>();
+        // enable regeneration
+        InvokeRepeating("RegenerateHealth", healthGenerationDelay, healthGenerationDelay);
+
     }
 
     void GetStats()
@@ -53,21 +63,11 @@ public class Player : MonoBehaviour
         bulletSpeed = StatsManager.instance.bulletSpeed;
         shootDelayInSeconds = StatsManager.instance.shootDelay;
 
-        knockbackForce = StatsManager.instance.knockbackForce;
-
         health = maxHealth;
-    }
-
-    void Update()
-    {
-        RegenerateHealth();
     }
 
     void RegenerateHealth()
     {
-        if (isGeneratingHealth)
-            return;
-
         isGeneratingHealth = true;
 
         if (health < maxHealth)
@@ -75,19 +75,14 @@ public class Player : MonoBehaviour
         else if (health > maxHealth)    // Dont want it to go over max lol
             health = maxHealth;
 
-        Invoke("RegenerateHealthDelay", healthGenerationDelay);
-    }
-
-    void RegenerateHealthDelay()
-    {
-        isGeneratingHealth = false;
+        UIManager.instance.UpdateHealthBar(health, maxHealth);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == Layer.AI)
         {
-            ReceiveDamage(other.GetComponent<AI>());
+            ReceiveDamage(other.GetComponent<Flock>());
         }
     }
 
@@ -150,13 +145,20 @@ public class Player : MonoBehaviour
         canShootRight = true;
     }
 
-    void ReceiveDamage(AI ai)
+    void ReceiveDamage(Flock ai)
     {
-        if (isDamaged)
+        if (isDamaged || isDead)
             return;
         isDamaged = true;
 
+        animator.SetTrigger("Damage");
+
         health -= ai.Damage();
+        if (health <= 0)
+        {
+            Death();
+        }
+
         UIManager.instance.UpdateHealthBar(health, maxHealth);
 
         Invoke("DamageDelay", damageDelay);
@@ -165,5 +167,37 @@ public class Player : MonoBehaviour
     void DamageDelay()
     {
         isDamaged = false;
+    }
+
+    void Death()
+    {
+        health = 0;
+        isDead = true;
+
+        animator.SetBool("Death", true);
+        rBody.constraints = RigidbodyConstraints.FreezeAll;
+
+        CancelInvoke();
+    }
+
+    void LoadUpgradeShop()
+    {
+        PlayerPrefs.SetString("Scene", "UpgradeShop");
+        SceneManager.LoadScene("Loading");
+    }
+
+    void LoadGameOver()
+    {
+        PlayerPrefs.SetString("Scene", "GameOver");
+        SceneManager.LoadScene("Loading");
+    }
+
+    public void WaveComplete()
+    {
+        UIManager.instance.ShowWavePanel("Wave completed!");
+
+        PlayerPrefs.SetInt("Wave", PlayerPrefs.GetInt("Wave")+1);
+
+        Invoke("LoadUpgradeShop", 2); // 2 = delay
     }
 }

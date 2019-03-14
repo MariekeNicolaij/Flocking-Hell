@@ -53,14 +53,35 @@ public class AIManager : MonoBehaviour
             Destroy(this);
         }
 
+        GetStats();
+
+        GenerateSpawnPoints();
+        SpawnFlockingAIGroups();
+    }
+
+    void GetStats()
+    {
         flockGroupAmount = StatsManager.instance.aiGroupSize;
         flockSize = StatsManager.instance.aiFlockSize;
 
         minVelocity = StatsManager.instance.aiMinVelocity;
         maxVelocity = StatsManager.instance.aiMaxVelocity;
+    }
 
-        GenerateSpawnPoints();
-        SpawnFlockingAIGroups();
+    /// <summary>
+    /// Update stats according to what wave is curently playing
+    /// </summary>
+    void UpdateStats()
+    {
+        int wave = StatsManager.instance.wave;
+    }
+
+    /// <summary>
+    /// Save updated stats
+    /// </summary>
+    void SaveStats()
+    {
+
     }
 
     void GenerateSpawnPoints()
@@ -108,7 +129,7 @@ public class AIManager : MonoBehaviour
             for (int j = 0; j < flockSize; j++)
             {
                 GameObject ai = Instantiate(prefab);
-                AI script = ai.GetComponent<AI>();
+                Flock script = ai.GetComponent<Flock>();
 
                 ai.transform.parent = AIParent.transform;
                 ai.transform.position = groupSpawnPosition;
@@ -122,6 +143,11 @@ public class AIManager : MonoBehaviour
 
             aliveFlockingAI.Add(flockGroup);
         }
+    }
+
+    public void SpawnNormalAI()
+    {
+        aliveAICount++;
     }
 
     void Update()
@@ -155,13 +181,18 @@ public class AIManager : MonoBehaviour
     {
         if (flocking)
         {
-            int groupIndex = ai.GetComponent<AI>().groupIndex;
+            int groupIndex = ai.GetComponent<Flock>().groupIndex;
             aliveFlockingAI[groupIndex].Remove(ai);
-
-            aliveAICount--;
         }
         else
             aliveNormalAI.Remove(ai);
+
+        aliveAICount--;
+        UIManager.instance.UpdateAIAliveText(aliveAICount);
+
+        if (aliveAICount <= 0)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().WaveComplete();
+
         Destroy(ai);
     }
 }

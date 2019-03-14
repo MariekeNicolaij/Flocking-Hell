@@ -5,19 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class UpgradeShop : MonoBehaviour
 {
-    public float health;
-    public float healthGeneration;
+    // Health
+    public int health;
+    public int healthGeneration, healthGenerationDelay;
 
+    // Laser
     public float laserLength;
-    public float laserSightLength;
 
-    public float damage;
+    // Offense
+    public int minDamage, maxDamage;
     public float bulletAliveTime;
     public float bulletSpeed;
     public float shootDelay;
 
+    // Camera
     public float cameraZoom;
-    public float knockback;
     
 
     void Start()
@@ -37,7 +39,6 @@ public class UpgradeShop : MonoBehaviour
 
     public void NextWave()
     {
-        PlayerPrefs.SetInt("Wave", PlayerPrefs.GetInt("Wave", 0) + 1);
         PlayerPrefs.SetString("Scene", "Game");
         SceneManager.LoadScene("Loading");
     }

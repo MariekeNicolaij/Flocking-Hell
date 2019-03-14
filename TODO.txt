@@ -1,9 +1,8 @@
-MSCW -> PLAN inleveren
-
+REPORT
 
 --------AI---------
 AI speed hoger per level
-Miniboss nadat flockingai dood is?
+Miniboss nadat flockingai dood is? Of na 5 waves ofzo
 Per 3 levels de flockSize vergroten per 5
 Meer AI models (Vliegend en normaal)
 Alleen vliegende ai laten flocken
@@ -20,45 +19,41 @@ Seperation code, ze moeten wel een beetje door elkaar kunnen
 -------Game--------
 Comments!
 Achievements
-Dark theme(hoeken)
+Game over scherm
+Dark theme(hoeken van de scherm een soort rondje wat nog wel zichtbaar is)
+Terrain texture spooky
 Mist
+Skybox ook spooky maken
 NavMeshObstacle op alle platforms zetten en carving aanvinken
 Random map die word gegenereerd met stukken map
 Walls spooky maken
 Wave system
 Levelmanager die de algemene difficulty/moneycost/aigroup/aigroupcount multiplier heeft
-Score = geld, geld is score
+Score = geld
+Als alle AI dood is iets van een panel showen met "Wave completed" en dan upgradeshop laoden
 
 -------Player------
-Krijg damage animatie
-Doodanimatie
-Alleen 180 graden kunnen schieten?
-Damage receive timeout
-Health generation
-Knockback
-Rood flashscherm if damaged
+:)
 
 --------UI---------
 Text met hoeveel ai er nog is
-Dikke levensbalk onderin
-Font gebruiken (al in projectfolder)
-Controller support
-Hide cursor ingame
-Start scherm met gelijk de controls daarop en audio opties en delete save knopje. Hoef geen ingewikkeld ui systeem te maken
+Start scherm met gelijk de controls daarop en audio opties en highscore. Hoef geen ingewikkeld ui systeem te maken
 Bewegende mist voor startscherm
-Hitpoints
+Hitpoints (ook voor healthgeneration)
 AI levens balletje
 Upgradeshop aan het begin van elke wave
 Cursor voor alles behalve Game.unity
-Crosshair voor Game.unity
+Highscore moet beetje animeren (groot klein animatie, klein beetje roterend?, color flash?)
+Rood flashscherm if damaged
 
 -----Upgradeshop----
-Checks bouwen voor dingen die niet onder 0 mogen komen
+Checks bouwen voor dingen die niet onder 0 mogen komen (maxed out)
 Upgradeshop dit ook je current stats laat zien en misschien de waardes een beetje faken zodat het lijkt alsof ze allemaal van 1 tot 10 ofzo zijn
 Begin geld maar zo dat je maar 1 ding kunt kopen of 2
+Sommige dingen die wat meer OP zijn duurder maken(healthGenerationDelay)
 
 -----Wave system----
-Wat moet er moeilijker gemaakt worden?
+Wat moet er moeilijker gemaakt worden? (AI)
 
 -----Te Testen------
 Wave nummers
@@ -66,3 +61,6 @@ Of gekochte upgrade wel werken
 Verschillende AI spawns per aantal waves
 Levensbalk
 Waardes van de StatsManager of ze wel lekker spelen
+Controller support
+Receive damage delay(Nu te sloom?(Wave 1))
+Highscore
