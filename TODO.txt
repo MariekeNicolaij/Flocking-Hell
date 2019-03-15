@@ -1,20 +1,13 @@
 REPORT
 
 --------AI---------
-AI speed hoger per level
-Miniboss nadat flockingai dood is? Of na 5 waves ofzo
-Per 3 levels de flockSize vergroten per 5
 Meer AI models (Vliegend en normaal)
-Alleen vliegende ai laten flocken
 AI levens
-Explosies als enemies dood gaan?
 Goed laten roteren naar waar ze naartoe willen
-Pathfinding :(
+Pathfinding
 Klein beetje licht geven
-Meer damage per 10 levels?
-Als group minder dan 5 ofzo heeft dan samen voegen met de kleinste group
+Als group minder dan 5 ofzo heeft dan samen voegen met de kleinste group?
 Flocking force applyen if obstacles
-Seperation code, ze moeten wel een beetje door elkaar kunnen
 
 -------Game--------
 Comments!
@@ -27,22 +20,16 @@ Skybox ook spooky maken
 NavMeshObstacle op alle platforms zetten en carving aanvinken
 Random map die word gegenereerd met stukken map
 Walls spooky maken
-Wave system
-Levelmanager die de algemene difficulty/moneycost/aigroup/aigroupcount multiplier heeft
-Score = geld
-Score multiplyer per wave?
-Als alle AI dood is iets van een panel showen met "Wave completed" en dan upgradeshop laoden
+StatsManager multipliers
 
 -------Player------
 :)
 
 --------UI---------
-Text met hoeveel ai er nog is
 Start scherm met gelijk de controls daarop en audio opties en highscore. Hoef geen ingewikkeld ui systeem te maken
 Bewegende mist voor startscherm
 Hitpoints (ook voor healthgeneration)
 AI levens balletje
-Upgradeshop aan het begin van elke wave
 Cursor voor alles behalve Game.unity
 Highscore moet beetje animeren (groot klein animatie, klein beetje roterend?, color flash?)
 Rood flashscherm if damaged
@@ -55,15 +42,17 @@ Sommige dingen die wat meer OP zijn duurder maken(healthGenerationDelay)
 
 -----Wave system----
 Wat moet er moeilijker gemaakt worden? (AI)
+Miniboss nadat flockingai dood is? Of na 3 waves ofzo
+Per 3 levels de flockSize vergroten per 5
+Meer damage done door ai per level?
+AI speed hoger per level
 
 --------Bugs--------
 :)
 
 -----Te Testen------
-Wave nummers
 Of gekochte upgrade wel werken
 Verschillende AI spawns per aantal waves
-Levensbalk
 Waardes van de StatsManager of ze wel lekker spelen
 Controller support
 Receive damage delay(Nu te sloom?(Wave 1))
