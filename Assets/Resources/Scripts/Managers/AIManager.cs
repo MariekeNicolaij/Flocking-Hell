@@ -19,13 +19,13 @@ public class AIManager : MonoBehaviour
     [HideInInspector]
     public List<Vector3> groupSpawnPoints;  // Spawn points for the group
 
-    public GameObject target;
+    public Player player;
     public GameObject AIParent;
 
     [HideInInspector]
-    public int flockGroupAmount = 3;    // How many groups
+    public int flockGroupAmount;    // How many groups
     [HideInInspector]
-    public int flockSize = 10;          // AI per group
+    public int flockSize;          // AI per group
 
     public float minVelocity;       // Min speed
     public float maxVelocity;       // Max speed
@@ -35,6 +35,7 @@ public class AIManager : MonoBehaviour
 
     public int aliveAICount;
 
+
     void Start()
     {
         instance = this;
@@ -43,9 +44,9 @@ public class AIManager : MonoBehaviour
         {
             terrain = GameObject.Find("Terrain").GetComponent<Terrain>();
         }
-        if (!target)
+        if (!player)
         {
-            target = GameObject.Find("Player");
+            player = GameObject.Find("Player").GetComponent<Player>();
         }
         if (flockingAIPrefab.Count == 0 || normalAIPrefab.Count == 0)
         {
@@ -57,6 +58,13 @@ public class AIManager : MonoBehaviour
 
         GenerateSpawnPoints();
         SpawnFlockingAIGroups();
+        Invoke("SetAIAliveTextForTheFirstTime", 0.1f);
+    }
+
+    // Yeah..
+    void SetAIAliveTextForTheFirstTime()
+    {
+        UIManager.instance.UpdateAIAliveText(aliveAICount);
     }
 
     void GetStats()
@@ -69,7 +77,7 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update stats according to what wave is curently playing
+    /// Update stats according to current wave
     /// </summary>
     void UpdateStats()
     {
@@ -181,17 +189,33 @@ public class AIManager : MonoBehaviour
     {
         if (flocking)
         {
+            // When you shoot 2 bullets at the exact same time it might occur
+            // that it wants to delete the same ai again.
+            // Now that is not very handy
+            Flock script = ai.GetComponent<Flock>();
+            if (script.isBeingDestroyed)
+                return;
+            script.isBeingDestroyed = true;
+
             int groupIndex = ai.GetComponent<Flock>().groupIndex;
             aliveFlockingAI[groupIndex].Remove(ai);
         }
         else
-            aliveNormalAI.Remove(ai);
+        {
+            // Ditto ^
+            Normal script = ai.GetComponent<Normal>();
+            if (script.isBeingDestroyed)
+                return;
+            script.isBeingDestroyed = true;
 
+            aliveNormalAI.Remove(ai);
+        }
+        
         aliveAICount--;
         UIManager.instance.UpdateAIAliveText(aliveAICount);
 
         if (aliveAICount <= 0)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().WaveComplete();
+            player.WaveComplete();
 
         Destroy(ai);
     }

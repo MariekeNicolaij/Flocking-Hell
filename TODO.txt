@@ -30,6 +30,7 @@ Walls spooky maken
 Wave system
 Levelmanager die de algemene difficulty/moneycost/aigroup/aigroupcount multiplier heeft
 Score = geld
+Score multiplyer per wave?
 Als alle AI dood is iets van een panel showen met "Wave completed" en dan upgradeshop laoden
 
 -------Player------
@@ -54,6 +55,9 @@ Sommige dingen die wat meer OP zijn duurder maken(healthGenerationDelay)
 
 -----Wave system----
 Wat moet er moeilijker gemaakt worden? (AI)
+
+--------Bugs--------
+:)
 
 -----Te Testen------
 Wave nummers

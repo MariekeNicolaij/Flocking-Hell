@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
     }
 
+    // InvokeRepeating
     void RegenerateHealth()
     {
         isGeneratingHealth = true;
@@ -145,6 +146,18 @@ public class Player : MonoBehaviour
         canShootRight = true;
     }
 
+    // Called in Bullet.cs
+    public void ApplyScore(int specialMultiplier = 1)
+    {
+        score += RandomScore() * specialMultiplier;
+        UIManager.instance.UpdateScoreText(score);
+    }
+
+    int RandomScore()
+    {
+        return Mathf.RoundToInt(Random.Range(100, 150) * StatsManager.instance.scoreMultiplier);
+    }
+
     void ReceiveDamage(Flock ai)
     {
         if (isDamaged || isDead)
@@ -178,26 +191,31 @@ public class Player : MonoBehaviour
         rBody.constraints = RigidbodyConstraints.FreezeAll;
 
         CancelInvoke();
+
+        UIManager.instance.ShowWavePanel("Game over!");
+        Invoke("LoadGameOver", 3); // 3 = delay
     }
 
     void LoadUpgradeShop()
     {
-        PlayerPrefs.SetString("Scene", "UpgradeShop");
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("UpgradeShop");
     }
 
     void LoadGameOver()
     {
-        PlayerPrefs.SetString("Scene", "GameOver");
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("GameOver");
     }
 
     public void WaveComplete()
     {
         UIManager.instance.ShowWavePanel("Wave completed!");
 
-        PlayerPrefs.SetInt("Wave", PlayerPrefs.GetInt("Wave")+1);
+        int nextWave = PlayerPrefs.GetInt("Wave", 1) + 1;
+        float sm = 1 + (nextWave * 0.1f);
 
-        Invoke("LoadUpgradeShop", 2); // 2 = delay
+        PlayerPrefs.SetFloat("ScoreMultiplier", sm);
+        PlayerPrefs.SetInt("Wave", nextWave);
+
+        Invoke("LoadUpgradeShop", 5); // 5 = delay
     }
 }

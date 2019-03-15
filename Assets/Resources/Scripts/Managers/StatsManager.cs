@@ -25,6 +25,8 @@ public class StatsManager : MonoBehaviour
     public int score;
     [HideInInspector]
     public int highscore;
+    [HideInInspector]
+    public float scoreMultiplier;
 
     // Offense
     [HideInInspector]
@@ -71,8 +73,9 @@ public class StatsManager : MonoBehaviour
 
         laserLength = PlayerPrefs.GetFloat("LaserLength", 3);
 
-        score = PlayerPrefs.GetInt("Score", 0);
+        score = PlayerPrefs.GetInt("Score", 5000);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
+        scoreMultiplier = PlayerPrefs.GetFloat("ScoreMultiplier", 1);
 
         minDamage = PlayerPrefs.GetInt("MinDamage", 5);
         maxDamage = PlayerPrefs.GetInt("MaxDamage", 10);

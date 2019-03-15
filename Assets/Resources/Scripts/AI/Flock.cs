@@ -14,6 +14,9 @@ public class Flock : MonoBehaviour
     public int health;
     public float minDamage, maxDamage;
 
+    [HideInInspector]
+    public bool isBeingDestroyed;
+
 
     public void SetController()
     {
@@ -68,7 +71,7 @@ public class Flock : MonoBehaviour
         randomize.Normalize();
         Vector3 flockCenter = AIManager.instance.flockCenter[groupIndex];
         Vector3 flockVelocity = AIManager.instance.flockVelocity[groupIndex];
-        Vector3 follow = AIManager.instance.target.transform.position;
+        Vector3 follow = AIManager.instance.player.transform.position;
 
         flockCenter -= transform.position;
         flockVelocity -= rBody.velocity;

@@ -6,7 +6,6 @@ public class LaserSight : MonoBehaviour
 {
     public GameObject targetForward;            // Because pistols arent straight and in this case want to use the players forward anyway
     LineRenderer laser;
-    Color laserColor = new Color(100, 0, 255);
 
     [HideInInspector]
     public float laserLength;
@@ -25,15 +24,17 @@ public class LaserSight : MonoBehaviour
         laserLength = StatsManager.instance.laserLength;
 
         laser = gameObject.AddComponent<LineRenderer>();
-        laser.material.color = laserColor;
+        laser.material = (Material)Resources.Load("Materials/Laser");
         laser.widthMultiplier = laserWidth;
 
         laser.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     }
 
-    void Update()
+    // Fixes linerender flickerbug when getting hit
+    void LateUpdate()
     {
         Laser();
+
     }
 
     void Laser()

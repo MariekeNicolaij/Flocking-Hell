@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
     public Text healthText;
     Color healthBarStartColor;
 
+    // Score
+    public Text scoreText;
+
     // AI
     public Text aiCountText;
 
@@ -91,14 +94,18 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
-        PlayerPrefs.SetString("Scene", "UpgradeShop");
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("UpgradeShop");
     }
 
     public void UpdateHealthBar(int health, int maxHealth)
     {
         healthBar.color = Color.Lerp(Color.red, healthBarStartColor, (float)health / (float)maxHealth); // Casten naar float omdat int delen door int voor een float is 0
         healthText.text = health + "/" + maxHealth;
+    }
+
+    public void UpdateScoreText(int score)
+    {
+        scoreText.text = "Score: " + score;
     }
 
     public void UpdateAIAliveText(int aiAlive)
@@ -115,7 +122,7 @@ public class UIManager : MonoBehaviour
         style.normal.textColor = Color.white;
 
         GUI.TextArea(
-            new Rect(Screen.width * 0.1f, Screen.height * 0.1f, Screen.width * 0.2f, Screen.height * 0.2f),
+            new Rect(Screen.width * 0.05f, Screen.height * 0.3f, Screen.width * 0.2f, Screen.height * 0.2f),
             "Max health: \t" + StatsManager.instance.health + "\n" +
             "Health generation: \t" + StatsManager.instance.healthGeneration + "\n" +
             "Generation delay: \t" + StatsManager.instance.healthGenerationDelay + "\n" +

@@ -35,11 +35,6 @@ public class Bullet : MonoBehaviour
         Invoke("DestroyBullet", bulletAliveTime);
     }
 
-    void Start()
-    {
-        // 
-    }
-
     void GetStats()
     {
         bulletAliveTime = StatsManager.instance.bulletAliveTime;
@@ -63,9 +58,15 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.layer == Layer.AI)
         {
             if (other.collider.tag == "AI Flocking")
+            {
+                AIManager.instance.player.ApplyScore();
                 AIManager.instance.DestroyAI(other.gameObject, true);
+            }
             if (other.collider.tag == "AI Normal")
+            {
+                AIManager.instance.player.ApplyScore(2);    // 2 = special multiplier
                 AIManager.instance.DestroyAI(other.gameObject, false);
+            }
         }
 
         // Rumble babyy
