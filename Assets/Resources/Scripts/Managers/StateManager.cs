@@ -3,22 +3,22 @@ using System.Collections;
 
 public class StateManager
 {
-    public static StateManager instance;
-    public GameObject owner;
+    //public static StateManager instance;
+    public AI owner;
     public State currentState;
 
-    private State defaultState;
+    State defaultState;
 
-    public StateManager(GameObject owner, State defaultState)
+    public StateManager(AI owner, State defaultState)
     {
         this.owner = owner;
         this.defaultState = defaultState;
+        ChangeState(defaultState);
     }
 
     public void Start()
     {
-        instance = this;
-        ChangeState(defaultState);
+        //instance = this;
     }
 
     public void Update()

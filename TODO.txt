@@ -1,32 +1,36 @@
-REPORT
+---REPORT---
+Pathfinding niet echt gebruikt maar wel navmeshobstacles enzo
 
 --------AI---------
+STATEMANAGER (staat in mijn plan noway back now lol)
 Meer AI models (Vliegend en normaal)
 AI levens
 Goed laten roteren naar waar ze naartoe willen
-Pathfinding
 Klein beetje licht geven
 Als group minder dan 5 ofzo heeft dan samen voegen met de kleinste group?
-Flocking force applyen if obstacles
+Flocking loopt niet helemaal lekker(Je ziet niet dat het flocked)
+FlockState beter maken(zorgen dat er cohesion, seperation en alignment variablen komen)
 
 -------Game--------
 Comments!
 Achievements
 Game over scherm
 Dark theme(hoeken van de scherm een soort rondje wat nog wel zichtbaar is)
-Terrain texture spooky
-Mist
+Spooky Mist
 Skybox ook spooky maken
-NavMeshObstacle op alle platforms zetten en carving aanvinken
-Random map die word gegenereerd met stukken map
-Walls spooky maken
 StatsManager multipliers
 
 -------Player------
 :)
 
 --------UI---------
-Start scherm met gelijk de controls daarop en audio opties en highscore. Hoef geen ingewikkeld ui systeem te maken
+(
+Start scherm met gelijk de controls daarop en audio opties en highscore
+Linker helft van het scherm bewegend mist en de audio opties
+Rechterhelft van het scherm de controls
+Bovenmidden highscore
+Bovenmidden startknop
+)
 Bewegende mist voor startscherm
 Hitpoints (ook voor healthgeneration)
 AI levens balletje

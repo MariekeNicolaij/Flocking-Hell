@@ -82,9 +82,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == Layer.AI)
-        {
-            ReceiveDamage(other.GetComponent<Flock>());
-        }
+            ReceiveDamage(other.GetComponent<AI>());
     }
 
     // Called in PlayerInput
@@ -158,7 +156,7 @@ public class Player : MonoBehaviour
         return Mathf.RoundToInt(Random.Range(100, 150) * StatsManager.instance.scoreMultiplier);
     }
 
-    void ReceiveDamage(Flock ai)
+    void ReceiveDamage(AI ai)
     {
         if (isDamaged || isDead)
             return;

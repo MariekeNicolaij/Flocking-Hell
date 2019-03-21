@@ -65,7 +65,11 @@ public class UIManager : MonoBehaviour
     void SetHighscoreText()
     {
         if (SceneManager.GetActiveScene().name == "Start")
-            highscoreText.text = "Highscore: " + StatsManager.instance.highscore + " !";
+        {
+            highscoreText.text = (StatsManager.instance.highscore > 0) ?
+                "Highscore: " + StatsManager.instance.highscore + " !" :
+                "";
+        }
     }
 
     void SetWaveText()

@@ -236,13 +236,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2200658557626997448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7bd3ca446ae6a4995e382e6cca6f89, type: 3}
+  m_Script: {fileID: 11500000, guid: 874466a86a9be0f44a74bc371e921dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droneBlades:
-  - {fileID: 9030956373531781535}
-  - {fileID: 1091822273411177962}
+  rBody: {fileID: 0}
   groupIndex: 0
+  minVelocity: 0
+  maxVelocity: 0
+  health: 0
+  minDamage: 0
+  maxDamage: 0
+  isBeingDestroyed: 0
 --- !u!65 &6625479124141281672
 BoxCollider:
   m_ObjectHideFlags: 0

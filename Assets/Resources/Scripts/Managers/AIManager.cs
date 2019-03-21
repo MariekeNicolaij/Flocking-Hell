@@ -137,13 +137,13 @@ public class AIManager : MonoBehaviour
             for (int j = 0; j < flockSize; j++)
             {
                 GameObject ai = Instantiate(prefab);
-                Flock script = ai.GetComponent<Flock>();
+                AI script = ai.GetComponent<AI>();
 
                 ai.transform.parent = AIParent.transform;
                 ai.transform.position = groupSpawnPosition;
 
                 script.groupIndex = i;
-                script.SetController();
+                script.SetAI(true); // isFlock
 
                 aliveAICount++;
                 flockGroup.Add(ai);
@@ -185,29 +185,23 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    public void DestroyAI(GameObject ai, bool flocking)
+    public void DestroyAI(GameObject ai, bool isFlock)
     {
-        if (flocking)
-        {
-            // When you shoot 2 bullets at the exact same time it might occur
-            // that it wants to delete the same ai again.
-            // Now that is not very handy
-            Flock script = ai.GetComponent<Flock>();
-            if (script.isBeingDestroyed)
-                return;
-            script.isBeingDestroyed = true;
+        // When you shoot 2 bullets at the exact same time it might occur
+        // that it wants to delete the same ai again.
+        // Now that is not very handy
+        AI script = ai.GetComponent<AI>();
+        if (script.isBeingDestroyed)
+            return;
+        script.isBeingDestroyed = true;
 
-            int groupIndex = ai.GetComponent<Flock>().groupIndex;
+        if (isFlock)
+        {
+            int groupIndex = script.groupIndex;
             aliveFlockingAI[groupIndex].Remove(ai);
         }
         else
         {
-            // Ditto ^
-            Normal script = ai.GetComponent<Normal>();
-            if (script.isBeingDestroyed)
-                return;
-            script.isBeingDestroyed = true;
-
             aliveNormalAI.Remove(ai);
         }
         
