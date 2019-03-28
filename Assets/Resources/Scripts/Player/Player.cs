@@ -15,10 +15,10 @@ public class Player : MonoBehaviour
 
     // Player
     Rigidbody rBody;
-    float moveSpeed = 2f;
+    float moveSpeed;
 
     // Damaged
-    float damageDelay = 1;
+    float gettingHitDelay = 0.5f;
     bool isDamaged;
     bool isDead;
 
@@ -32,8 +32,8 @@ public class Player : MonoBehaviour
 
     // Shooting
     bool canShootLeft = true, canShootRight = true;
-    float bulletSpeed = 200;
-    float shootDelayInSeconds = 0.25f;
+    float bulletSpeed;
+    float shootDelayInSeconds;
 
 
     void Start()
@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
         maxHealth = StatsManager.instance.health;
         healthGeneration = StatsManager.instance.healthGeneration;
         healthGenerationDelay = StatsManager.instance.healthGenerationDelay;
+        moveSpeed = StatsManager.instance.speed;
 
         score = StatsManager.instance.score;
 
@@ -153,7 +154,7 @@ public class Player : MonoBehaviour
 
     int RandomScore()
     {
-        return Mathf.RoundToInt(Random.Range(100, 150) * StatsManager.instance.scoreMultiplier);
+        return Mathf.RoundToInt(Random.Range(100, 150) * StatsManager.instance.difficultyMultiplier);
     }
 
     void ReceiveDamage(AI ai)
@@ -172,7 +173,7 @@ public class Player : MonoBehaviour
 
         UIManager.instance.UpdateHealthBar(health, maxHealth);
 
-        Invoke("DamageDelay", damageDelay);
+        Invoke("DamageDelay", gettingHitDelay);
     }
 
     void DamageDelay()
@@ -208,12 +209,12 @@ public class Player : MonoBehaviour
     {
         UIManager.instance.ShowWavePanel("Wave completed!");
 
-        int nextWave = PlayerPrefs.GetInt("Wave", 1) + 1;
-        float sm = 1 + (nextWave * 0.1f);
+        int nextWave = StatsManager.instance.wave + 1;
+        float difficultyMultiplier = nextWave * 0.5f;
 
-        PlayerPrefs.SetFloat("ScoreMultiplier", sm);
         PlayerPrefs.SetInt("Wave", nextWave);
+        PlayerPrefs.SetFloat("DifficultyMultiplier", difficultyMultiplier);
 
-        Invoke("LoadUpgradeShop", 5); // 5 = delay
+        Invoke("LoadUpgradeShop", 5); // 5 = delay in seconds
     }
 }

@@ -23,8 +23,8 @@ public class FlockState : State
     {
         while (true)
         {
-            Debug.Log("owner.rBody.velocity + Calc() * Time.deltaTime " + owner.rBody.velocity + Calc() * Time.deltaTime);
-            Debug.Log("Calc() " + Calc());
+            //Debug.Log("owner.rBody.velocity + Calc() * Time.deltaTime " + owner.rBody.velocity + Calc() * Time.deltaTime);
+            //Debug.Log("Calc() " + Calc());
             owner.rBody.velocity = owner.rBody.velocity + Calc() * Time.deltaTime;
 
             // Speed

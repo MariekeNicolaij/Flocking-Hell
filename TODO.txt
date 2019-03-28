@@ -2,8 +2,6 @@
 Pathfinding niet echt gebruikt maar wel navmeshobstacles enzo
 
 --------AI---------
-STATEMANAGER (staat in mijn plan noway back now lol)
-Meer AI models (Vliegend en normaal)
 AI levens
 Goed laten roteren naar waar ze naartoe willen
 Klein beetje licht geven
@@ -11,26 +9,29 @@ Als group minder dan 5 ofzo heeft dan samen voegen met de kleinste group?
 Flocking loopt niet helemaal lekker(Je ziet niet dat het flocked)
 FlockState beter maken(zorgen dat er cohesion, seperation en alignment variablen komen)
 
+--------Audio---------
+Schieten
+Bullet iets raakt
+AI doodgaat
+AI vliegen
+Lopen
+Achtergrond muziek
+player doodgaat
+
 -------Game--------
-Comments!
 Achievements
-Game over scherm
 Dark theme(hoeken van de scherm een soort rondje wat nog wel zichtbaar is)
 Spooky Mist
 Skybox ook spooky maken
-StatsManager multipliers
-
--------Player------
-:)
+OnGUI() weghalen
+difficultymultiplier gebruiken overal (waar?)
 
 --------UI---------
 (
-Start scherm met gelijk de controls daarop en audio opties en highscore
-Linker helft van het scherm bewegend mist en de audio opties
-Rechterhelft van het scherm de controls
-Bovenmidden highscore
-Bovenmidden startknop
+Start scherm met audio opties(value afronden per 5)
+Fog moet wat sneller komen
 )
+Pause scherm
 Bewegende mist voor startscherm
 Hitpoints (ook voor healthgeneration)
 AI levens balletje
@@ -61,3 +62,4 @@ Waardes van de StatsManager of ze wel lekker spelen
 Controller support
 Receive damage delay(Nu te sloom?(Wave 1))
 Highscore
+slidervalue 0 save ( vanwege het delen door sliderstepts)

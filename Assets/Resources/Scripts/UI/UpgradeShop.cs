@@ -13,9 +13,10 @@ public class UpgradeShop : MonoBehaviour
     // Score
     public int score;
 
-    // Health
+    // Player
     public int health;
     public int healthGeneration, healthGenerationDelay;
+    public int speed;
 
     // Laser
     public float laserLength;

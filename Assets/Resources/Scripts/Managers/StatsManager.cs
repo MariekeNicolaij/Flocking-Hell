@@ -10,11 +10,13 @@ public class StatsManager : MonoBehaviour
     [HideInInspector]
     public int wave;
 
-    // Health
+    // Player
     [HideInInspector]
     public int health;
     [HideInInspector]
     public int healthGeneration, healthGenerationDelay;
+    [HideInInspector]
+    public int speed;
 
     // Laser
     [HideInInspector]
@@ -25,8 +27,6 @@ public class StatsManager : MonoBehaviour
     public int score;
     [HideInInspector]
     public int highscore;
-    [HideInInspector]
-    public float scoreMultiplier;
 
     // Offense
     [HideInInspector]
@@ -41,6 +41,10 @@ public class StatsManager : MonoBehaviour
     // Camera
     [HideInInspector]
     public float cameraZoom;
+
+    // Difficulty
+    [HideInInspector]
+    public float difficultyMultiplier;
 
     // AI
     [HideInInspector]
@@ -70,12 +74,12 @@ public class StatsManager : MonoBehaviour
         health = PlayerPrefs.GetInt("Health", 100);
         healthGeneration = PlayerPrefs.GetInt("HealthGeneration", 1);
         healthGenerationDelay = PlayerPrefs.GetInt("HealthGenerationDelay", 5);
+        speed = PlayerPrefs.GetInt("Speed", 2);
 
         laserLength = PlayerPrefs.GetFloat("LaserLength", 3);
 
         score = PlayerPrefs.GetInt("Score", 5000);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
-        scoreMultiplier = PlayerPrefs.GetFloat("ScoreMultiplier", 1);
 
         minDamage = PlayerPrefs.GetInt("MinDamage", 5);
         maxDamage = PlayerPrefs.GetInt("MaxDamage", 10);
@@ -84,7 +88,9 @@ public class StatsManager : MonoBehaviour
         shootDelay = PlayerPrefs.GetFloat("ShootDelay", 0.25f);
 
         cameraZoom = PlayerPrefs.GetFloat("CameraZoom", 4);
-}
+
+        difficultyMultiplier = PlayerPrefs.GetFloat("DifficultyMultiplier", 1);
+    }
 
     void GetAIStats()
     {
@@ -107,15 +113,21 @@ public class StatsManager : MonoBehaviour
         PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore") + score);
     }
 
-    // Reset everything except highscore
+    // Reset everything except highscore and volume settings
     void OnApplicationQuit()
     {
         int totalScore = PlayerPrefs.GetInt("TotalScore");
+        int musicVolume = PlayerPrefs.GetInt("MusicVolume", 100);   // If it hasnt been set I do not want it to save 0
+        int sfxVolume = PlayerPrefs.GetInt("SFXVolume", 100);       // *
 
         // Delete all the keys!
         PlayerPrefs.DeleteAll();
 
         // If totalscore is higher than highscore
         PlayerPrefs.SetInt("Highscore", (totalScore > highscore) ? totalScore : highscore);
+
+        // Re-set volume (lol)
+        PlayerPrefs.SetInt("MusicVolume", musicVolume);
+        PlayerPrefs.SetInt("SFXVolume", sfxVolume);
     }
 }

@@ -35,6 +35,8 @@ public class AIManager : MonoBehaviour
 
     public int aliveAICount;
 
+    public float difficultyMultiplier;
+
 
     void Start()
     {
@@ -74,22 +76,8 @@ public class AIManager : MonoBehaviour
 
         minVelocity = StatsManager.instance.aiMinVelocity;
         maxVelocity = StatsManager.instance.aiMaxVelocity;
-    }
 
-    /// <summary>
-    /// Update stats according to current wave
-    /// </summary>
-    void UpdateStats()
-    {
-        int wave = StatsManager.instance.wave;
-    }
-
-    /// <summary>
-    /// Save updated stats
-    /// </summary>
-    void SaveStats()
-    {
-
+        difficultyMultiplier = StatsManager.instance.difficultyMultiplier;
     }
 
     void GenerateSpawnPoints()

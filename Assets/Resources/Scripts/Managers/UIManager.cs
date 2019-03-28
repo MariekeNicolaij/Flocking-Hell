@@ -32,6 +32,11 @@ public class UIManager : MonoBehaviour
     // AI
     public Text aiCountText;
 
+    // Slider
+    public Slider musicSlider;
+    public Slider sfxSlider;
+    int sliderSteps = 5;        // So that the slidervalues always rounds to steps of 5
+
 
     void Start()
     {
@@ -42,6 +47,9 @@ public class UIManager : MonoBehaviour
 
         // Highscore
         SetHighscoreText();
+
+        // Sliders
+        SetSliders();
 
         // Player health
         if (healthBar)
@@ -68,7 +76,7 @@ public class UIManager : MonoBehaviour
         {
             highscoreText.text = (StatsManager.instance.highscore > 0) ?
                 "Highscore: " + StatsManager.instance.highscore + " !" :
-                "";
+                "Flocking Hell";
         }
     }
 
@@ -84,10 +92,40 @@ public class UIManager : MonoBehaviour
         waveText.text = "Wave " + StatsManager.instance.wave;
     }
 
+    void SetSliders()
+    {
+        if (!musicSlider || !sfxSlider)
+        {
+            Debug.LogError("Sliders aren't set!");
+            return;
+        }
+
+        // Set volume if it ever has been set
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 100) / sliderSteps;
+        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 100) / sliderSteps;
+        
+        OnSliderValueChange(musicSlider, "Music");
+        OnSliderValueChange(sfxSlider, "SFX");
+
+        musicSlider.onValueChanged.AddListener(delegate { OnSliderValueChange(musicSlider, "Music"); });
+        sfxSlider.onValueChanged.AddListener(delegate { OnSliderValueChange(sfxSlider, "SFX"); });
+    }
+
+    void OnSliderValueChange(Slider slider, string label)
+    {
+        float value = slider.value * sliderSteps;     // Because I want steps of 5 (0,5,10,15 etc.)
+        slider.GetComponentInChildren<Text>().text = label + ": " + (int)value + "%";
+
+        PlayerPrefs.SetFloat(label + "Volume", value);
+        Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
+        AudioManager.instance.SetVolumes();
+    }
+
     // Invoke
     public void DisableWavePanel()
     {
-        wavePanel.gameObject.SetActive(false);
+        if (wavePanel)
+            wavePanel.gameObject.SetActive(false);
     }
 
     public void ShowWavePanel(string wavePanelText = "")
@@ -118,25 +156,25 @@ public class UIManager : MonoBehaviour
     }
 
     // Show upgradable stats on screen for testing purposes
-    void OnGUI()
-    {
-        GUIStyle style = new GUIStyle();
-        style.font = (Font)Resources.Load("Fonts/Font");
-        style.fontSize = 20;
-        style.normal.textColor = Color.white;
+    //void OnGUI()
+    //{
+    //    GUIStyle style = new GUIStyle();
+    //    style.font = (Font)Resources.Load("Fonts/Font");
+    //    style.fontSize = 20;
+    //    style.normal.textColor = Color.white;
 
-        GUI.TextArea(
-            new Rect(Screen.width * 0.05f, Screen.height * 0.3f, Screen.width * 0.2f, Screen.height * 0.2f),
-            "Max health: \t" + StatsManager.instance.health + "\n" +
-            "Health generation: \t" + StatsManager.instance.healthGeneration + "\n" +
-            "Generation delay: \t" + StatsManager.instance.healthGenerationDelay + "\n" +
-            "Laser length: \t" + StatsManager.instance.laserLength + "\n" +
-            "Min damage: \t" + StatsManager.instance.minDamage + "\n" +
-            "Max damage: \t" + StatsManager.instance.maxDamage + "\n" +
-            "Bullet alive time: \t" + StatsManager.instance.bulletAliveTime + "\n" +
-            "Bullet speed: \t" + StatsManager.instance.bulletSpeed + "\n" +
-            "Shoot delay: \t" + StatsManager.instance.shootDelay + "\n" +
-            "Camera zoom: \t" + StatsManager.instance.cameraZoom + "\n",
-            style);
-    }
+    //    GUI.TextArea(
+    //        new Rect(Screen.width * 0.05f, Screen.height * 0.3f, Screen.width * 0.2f, Screen.height * 0.2f),
+    //        "Max health: \t" + StatsManager.instance.health + "\n" +
+    //        "Health generation: \t" + StatsManager.instance.healthGeneration + "\n" +
+    //        "Generation delay: \t" + StatsManager.instance.healthGenerationDelay + "\n" +
+    //        "Laser length: \t" + StatsManager.instance.laserLength + "\n" +
+    //        "Min damage: \t" + StatsManager.instance.minDamage + "\n" +
+    //        "Max damage: \t" + StatsManager.instance.maxDamage + "\n" +
+    //        "Bullet alive time: \t" + StatsManager.instance.bulletAliveTime + "\n" +
+    //        "Bullet speed: \t" + StatsManager.instance.bulletSpeed + "\n" +
+    //        "Shoot delay: \t" + StatsManager.instance.shootDelay + "\n" +
+    //        "Camera zoom: \t" + StatsManager.instance.cameraZoom + "\n",
+    //        style);
+    //}
 }
