@@ -74,7 +74,7 @@ public class StatsManager : MonoBehaviour
         health = PlayerPrefs.GetInt("Health", 100);
         healthGeneration = PlayerPrefs.GetInt("HealthGeneration", 1);
         healthGenerationDelay = PlayerPrefs.GetInt("HealthGenerationDelay", 5);
-        speed = PlayerPrefs.GetInt("Speed", 2);
+        speed = PlayerPrefs.GetInt("Speed", 1);
 
         laserLength = PlayerPrefs.GetFloat("LaserLength", 3);
 

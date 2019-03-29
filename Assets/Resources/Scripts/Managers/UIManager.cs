@@ -95,10 +95,7 @@ public class UIManager : MonoBehaviour
     void SetSliders()
     {
         if (!musicSlider || !sfxSlider)
-        {
-            Debug.LogError("Sliders aren't set!");
             return;
-        }
 
         // Set volume if it ever has been set
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 100) / sliderSteps;

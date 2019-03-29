@@ -212,6 +212,7 @@ public class Player : MonoBehaviour
         int nextWave = StatsManager.instance.wave + 1;
         float difficultyMultiplier = nextWave * 0.5f;
 
+        PlayerPrefs.SetInt("Score", score);
         PlayerPrefs.SetInt("Wave", nextWave);
         PlayerPrefs.SetFloat("DifficultyMultiplier", difficultyMultiplier);
 
