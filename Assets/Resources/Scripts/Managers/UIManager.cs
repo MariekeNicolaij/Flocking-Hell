@@ -114,7 +114,6 @@ public class UIManager : MonoBehaviour
         slider.GetComponentInChildren<Text>().text = label + ": " + (int)value + "%";
 
         PlayerPrefs.SetFloat(label + "Volume", value);
-        Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
         AudioManager.instance.SetVolumes();
     }
 

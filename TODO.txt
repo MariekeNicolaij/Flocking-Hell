@@ -2,12 +2,13 @@
 Pathfinding niet echt gebruikt maar wel navmeshobstacles enzo
 
 --------AI---------
-AI levens
-Goed laten roteren naar waar ze naartoe willen
 Klein beetje licht geven
-Als group minder dan 5 ofzo heeft dan samen voegen met de kleinste group?
 Flocking loopt niet helemaal lekker(Je ziet niet dat het flocked)
 FlockState beter maken(zorgen dat er cohesion, seperation en alignment variablen komen)
+Miniboss nadat flockingai dood is? Of na 3 waves ofzo
+Per 3 levels de flockSize vergroten per 5
+Meer damage done door ai per level?
+AI speed hoger per level
 
 --------Audio---------
 Schieten
@@ -17,25 +18,17 @@ AI vliegen
 Lopen
 Achtergrond muziek
 player doodgaat
+Selectie geluiden
 
 -------Game--------
-Achievements
 Dark theme(hoeken van de scherm een soort rondje wat nog wel zichtbaar is)
 Spooky Mist
 Skybox ook spooky maken
-OnGUI() weghalen
 difficultymultiplier gebruiken overal (waar?)
 
 --------UI---------
-(
-Start scherm met audio opties(value afronden per 5)
-Fog moet wat sneller komen
-)
 Pause scherm
-Bewegende mist voor startscherm
 Hitpoints (ook voor healthgeneration)
-AI levens balletje
-Cursor voor alles behalve Game.unity
 Highscore moet beetje animeren (groot klein animatie, klein beetje roterend?, color flash?)
 Rood flashscherm if damaged
 
@@ -44,16 +37,7 @@ Checks bouwen voor dingen die niet onder 0 mogen komen (maxed out)
 Upgradeshop dit ook je current stats laat zien en misschien de waardes een beetje faken zodat het lijkt alsof ze allemaal van 1 tot 10 ofzo zijn
 Begin geld maar zo dat je maar 1 ding kunt kopen of 2
 Sommige dingen die wat meer OP zijn duurder maken(healthGenerationDelay)
-
------Wave system----
-Wat moet er moeilijker gemaakt worden? (AI)
-Miniboss nadat flockingai dood is? Of na 3 waves ofzo
-Per 3 levels de flockSize vergroten per 5
-Meer damage done door ai per level?
-AI speed hoger per level
-
---------Bugs--------
-:)
+huidig level > volgend level
 
 -----Te Testen------
 Of gekochte upgrade wel werken

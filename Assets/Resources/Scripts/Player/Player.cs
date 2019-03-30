@@ -80,10 +80,12 @@ public class Player : MonoBehaviour
         UIManager.instance.UpdateHealthBar(health, maxHealth);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == Layer.AI)
-            ReceiveDamage(other.GetComponent<AI>());
+            ReceiveDamage(other.GetComponent<AI>().Damage());
+        if (other.tag == "Fire")
+            ReceiveDamage(5);   // Fire damage I guess
     }
 
     // Called in PlayerInput
@@ -154,10 +156,10 @@ public class Player : MonoBehaviour
 
     int RandomScore()
     {
-        return Mathf.RoundToInt(Random.Range(100, 150) * StatsManager.instance.difficultyMultiplier);
+        return Mathf.RoundToInt(Random.Range(10, 15) * StatsManager.instance.difficultyMultiplier);
     }
 
-    void ReceiveDamage(AI ai)
+    void ReceiveDamage(int damage)
     {
         if (isDamaged || isDead)
             return;
@@ -165,7 +167,7 @@ public class Player : MonoBehaviour
 
         animator.SetTrigger("Damage");
 
-        health -= ai.Damage();
+        health -= damage;
         if (health <= 0)
         {
             Death();

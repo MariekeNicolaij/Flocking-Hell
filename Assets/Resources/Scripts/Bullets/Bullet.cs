@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
 
         rBody = GetComponent<Rigidbody>();
-    
+
         GetStats();
 
         particles = GetComponentInChildren<ParticleSystem>();
@@ -34,6 +34,7 @@ public class Bullet : MonoBehaviour
 
         Invoke("DestroyBullet", bulletAliveTime);
     }
+
 
     void GetStats()
     {
@@ -57,15 +58,15 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.layer == Layer.AI)
         {
+            AI ai = other.gameObject.GetComponent<AI>();
+
             if (other.collider.tag == "AI Flocking")
             {
-                AIManager.instance.player.ApplyScore();
-                AIManager.instance.DestroyAI(other.gameObject, true);
+                DamageAI(ai);
             }
             if (other.collider.tag == "AI Normal")
             {
-                AIManager.instance.player.ApplyScore(2);    // 2 = special multiplier
-                AIManager.instance.DestroyAI(other.gameObject, false);
+                DamageAI(ai, false);    // AI is not part of a flocking group
             }
         }
 
@@ -78,9 +79,16 @@ public class Bullet : MonoBehaviour
     /// Does random calculated damage based on min and max value
     /// </summary>
     /// <returns></returns>
-    public int Damage()
+    public void DamageAI(AI ai, bool isFlocking = true)
     {
-        return Mathf.RoundToInt(Random.Range(minDamage, maxDamage));
+        // Apply score
+        AIManager.instance.player.ApplyScore((isFlocking) ? 1 : 2);     // 2 = special multiplier because the 'normal AI's' are harder to beat, otherwise just regular score (1x)
+
+        // Calculate damage
+        int damage = Mathf.RoundToInt(Random.Range(minDamage, maxDamage) * StatsManager.instance.damageLevel);
+
+        // Apply damage to AI
+        ai.ReceiveDamage(damage);
     }
 
     void PlayDestroyAnimation()

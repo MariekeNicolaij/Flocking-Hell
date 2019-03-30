@@ -10,14 +10,17 @@ public class AI : MonoBehaviour
     [HideInInspector]
     public Rigidbody rBody;
 
-    public int groupIndex;  // Used if AI is flocking
+    public bool isFlocking;
+    public int groupIndex;          // Used if AI is flocking
     [HideInInspector]
     public float minVelocity;      // Min speed
     [HideInInspector]
     public float maxVelocity;      // Max speed
 
     // Health
-    public int health;
+    public GameObject healthBar;
+    Material healthBarMaterial;
+    public int health, maxHealth;
     public float minDamage, maxDamage;
 
     [HideInInspector]
@@ -27,7 +30,11 @@ public class AI : MonoBehaviour
     public void SetAI(bool isFlock = false)
     {
         rBody = GetComponent<Rigidbody>();
+        isFlocking = isFlock;
         GetStats();
+
+        if (healthBar)
+            healthBarMaterial = healthBar.GetComponent<Renderer>().material;
 
         stateManager = new StateManager(this, (isFlock) ? (State)new FlockState() : (State)new NormalState());
     }
@@ -39,16 +46,14 @@ public class AI : MonoBehaviour
         maxDamage = StatsManager.instance.aiMaxDamage;
         minVelocity = AIManager.instance.minVelocity;
         maxVelocity = AIManager.instance.maxVelocity;
+
+        maxHealth = health;
     }
 
     void Update()
     {
         stateManager.Update();
-    }
-
-    void RotateTowardsDirection()
-    {
-
+        transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
     }
 
     /// <summary>
@@ -58,5 +63,38 @@ public class AI : MonoBehaviour
     public int Damage()
     {
         return Mathf.RoundToInt(Random.Range(minDamage, maxDamage));
+    }
+
+    public void ReceiveDamage(int damage)
+    {
+        health -= damage;
+        Debug.Log(health);
+
+        if(health < 0)
+        {
+            health = 0;
+            PlayDeathAnimation();
+        }
+
+        Color blue = Color.blue;
+        Color red = Color.red;
+        blue.a = 0.5f;
+        red.a = 0.5f;
+
+        if(healthBarMaterial)
+            healthBarMaterial.color = Color.Lerp(red, blue, (float)health / (float)maxHealth); // Casten naar float omdat het een normalized value nodig heeft
+    }
+
+    void PlayDeathAnimation()
+    {
+        // Play();
+        ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+        ps.Play();
+        Invoke("DestroyAI", ps.main.duration);
+    }
+
+    void DestroyAI()
+    {
+        AIManager.instance.DestroyAI(gameObject, isFlocking);
     }
 }

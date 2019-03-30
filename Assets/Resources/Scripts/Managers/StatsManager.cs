@@ -30,6 +30,8 @@ public class StatsManager : MonoBehaviour
 
     // Offense
     [HideInInspector]
+    public float damageLevel;
+    [HideInInspector]
     public int minDamage, maxDamage;
     [HideInInspector]
     public float bulletAliveTime;
@@ -81,10 +83,11 @@ public class StatsManager : MonoBehaviour
         score = PlayerPrefs.GetInt("Score", 5000);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
 
+        damageLevel = PlayerPrefs.GetFloat("DamageLevel", 1);
         minDamage = PlayerPrefs.GetInt("MinDamage", 5);
         maxDamage = PlayerPrefs.GetInt("MaxDamage", 10);
         bulletAliveTime = PlayerPrefs.GetFloat("BulletAliveTime", 1);
-        bulletSpeed = PlayerPrefs.GetFloat("BulletSpeed", 200);
+        bulletSpeed = PlayerPrefs.GetFloat("BulletSpeed", 100);
         shootDelay = PlayerPrefs.GetFloat("ShootDelay", 0.25f);
 
         cameraZoom = PlayerPrefs.GetFloat("CameraZoom", 4);
@@ -100,7 +103,7 @@ public class StatsManager : MonoBehaviour
         aiMinVelocity = PlayerPrefs.GetFloat("AIMinVelocity", 1);
         aiMaxVelocity = PlayerPrefs.GetFloat("AIMaxVelocity", 2);
         aiFlockSize = PlayerPrefs.GetInt("AIFlockSize", 10);
-        aiGroupSize = PlayerPrefs.GetInt("AIGroupSize", 3);
+        aiGroupSize = PlayerPrefs.GetInt("AIGroupSize", 2);
     }
 
     /// <summary>
@@ -117,8 +120,8 @@ public class StatsManager : MonoBehaviour
     void OnApplicationQuit()
     {
         int totalScore = PlayerPrefs.GetInt("TotalScore");
-        int musicVolume = PlayerPrefs.GetInt("MusicVolume", 100);   // If it hasnt been set I do not want it to save 0
-        int sfxVolume = PlayerPrefs.GetInt("SFXVolume", 100);       // *
+        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 100);   // If it hasnt been set I do not want it to save 0
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 100);       // *
 
         // Delete all the keys!
         PlayerPrefs.DeleteAll();
@@ -127,7 +130,7 @@ public class StatsManager : MonoBehaviour
         PlayerPrefs.SetInt("Highscore", (totalScore > highscore) ? totalScore : highscore);
 
         // Re-set volume (lol)
-        PlayerPrefs.SetInt("MusicVolume", musicVolume);
-        PlayerPrefs.SetInt("SFXVolume", sfxVolume);
+        PlayerPrefs.SetFloat("MusicVolume", musicVolume);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
     }
 }
