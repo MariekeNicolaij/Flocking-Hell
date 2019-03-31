@@ -20,7 +20,7 @@ public class Follow : MonoBehaviour
         if (transform.parent)
             transform.SetParent(null);
 
-        positionOffset = new Vector3(0, StatsManager.instance.cameraZoom, -StatsManager.instance.cameraZoom);
+        positionOffset = new Vector3(0, StatsManager.instance.cameraZoomLevel, -StatsManager.instance.cameraZoomLevel);
         transform.eulerAngles = rotation;
     }
 

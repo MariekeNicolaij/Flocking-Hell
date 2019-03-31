@@ -9,6 +9,7 @@ Miniboss nadat flockingai dood is? Of na 3 waves ofzo
 Per 3 levels de flockSize vergroten per 5
 Meer damage done door ai per level?
 AI speed hoger per level
+AI moelijker maken per level(ogheb ik dat al gedaan?)
 
 --------Audio---------
 Schieten
@@ -25,19 +26,18 @@ Dark theme(hoeken van de scherm een soort rondje wat nog wel zichtbaar is)
 Spooky Mist
 Skybox ook spooky maken
 difficultymultiplier gebruiken overal (waar?)
+Rainbow mode?
 
 --------UI---------
 Pause scherm
 Hitpoints (ook voor healthgeneration)
 Highscore moet beetje animeren (groot klein animatie, klein beetje roterend?, color flash?)
 Rood flashscherm if damaged
+HUD wat groter (testen op 1920x1080p)
 
 -----Upgradeshop----
-Checks bouwen voor dingen die niet onder 0 mogen komen (maxed out)
-Upgradeshop dit ook je current stats laat zien en misschien de waardes een beetje faken zodat het lijkt alsof ze allemaal van 1 tot 10 ofzo zijn
-Begin geld maar zo dat je maar 1 ding kunt kopen of 2
-Sommige dingen die wat meer OP zijn duurder maken(healthGenerationDelay)
-huidig level > volgend level
+Checks bouwen voor dingen die niet onder 0 mogen komen (maxed out)(HG delay(minimaal 1) en shootdelay(minimaal 0.1f))
+Max waardes instellen voor sommige dingen (HG, speed, laser length, bullet alive time, bullet speed, camera zoom level)
 
 -----Te Testen------
 Of gekochte upgrade wel werken

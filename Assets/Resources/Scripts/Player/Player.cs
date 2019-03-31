@@ -47,9 +47,12 @@ public class Player : MonoBehaviour
 
         // Player
         rBody = GetComponent<Rigidbody>();
-        // enable regeneration
+
+        // Enable regeneration
         InvokeRepeating("RegenerateHealth", healthGenerationDelay, healthGenerationDelay);
 
+        // Because UIManager does not really 'exist' at this point
+        Invoke("UpdateHealthBarOnceAtStart", 0.1f);
     }
 
     void GetStats()
@@ -65,6 +68,11 @@ public class Player : MonoBehaviour
         shootDelayInSeconds = StatsManager.instance.shootDelay;
 
         health = maxHealth;
+    }
+
+    void UpdateHealthBarOnceAtStart()
+    {
+        UIManager.instance.UpdateHealthBar(health, maxHealth);
     }
 
     // InvokeRepeating
@@ -214,7 +222,8 @@ public class Player : MonoBehaviour
         int nextWave = StatsManager.instance.wave + 1;
         float difficultyMultiplier = nextWave * 0.5f;
 
-        PlayerPrefs.SetInt("Score", score);
+        int oldScore = PlayerPrefs.GetInt("Score");
+        PlayerPrefs.SetInt("Score", score + oldScore);
         PlayerPrefs.SetInt("Wave", nextWave);
         PlayerPrefs.SetFloat("DifficultyMultiplier", difficultyMultiplier);
 

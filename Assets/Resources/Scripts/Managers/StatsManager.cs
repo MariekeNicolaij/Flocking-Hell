@@ -20,7 +20,7 @@ public class StatsManager : MonoBehaviour
 
     // Laser
     [HideInInspector]
-    public float laserLength;
+    public int laserLength;
 
     // Score
     [HideInInspector]
@@ -34,15 +34,15 @@ public class StatsManager : MonoBehaviour
     [HideInInspector]
     public int minDamage, maxDamage;
     [HideInInspector]
-    public float bulletAliveTime;
+    public int bulletAliveTime;
     [HideInInspector]
-    public float bulletSpeed;
+    public int bulletSpeed;
     [HideInInspector]
     public float shootDelay;
 
     // Camera
     [HideInInspector]
-    public float cameraZoom;
+    public int cameraZoomLevel;
 
     // Difficulty
     [HideInInspector]
@@ -78,19 +78,19 @@ public class StatsManager : MonoBehaviour
         healthGenerationDelay = PlayerPrefs.GetInt("HealthGenerationDelay", 5);
         speed = PlayerPrefs.GetInt("Speed", 1);
 
-        laserLength = PlayerPrefs.GetFloat("LaserLength", 3);
+        laserLength = PlayerPrefs.GetInt("LaserLength", 3);
 
-        score = PlayerPrefs.GetInt("Score", 5000);
+        score = PlayerPrefs.GetInt("Score", 500000000);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
 
         damageLevel = PlayerPrefs.GetFloat("DamageLevel", 1);
         minDamage = PlayerPrefs.GetInt("MinDamage", 5);
         maxDamage = PlayerPrefs.GetInt("MaxDamage", 10);
-        bulletAliveTime = PlayerPrefs.GetFloat("BulletAliveTime", 1);
-        bulletSpeed = PlayerPrefs.GetFloat("BulletSpeed", 100);
-        shootDelay = PlayerPrefs.GetFloat("ShootDelay", 0.25f);
+        bulletAliveTime = PlayerPrefs.GetInt("BulletAliveTime", 1);
+        bulletSpeed = PlayerPrefs.GetInt("BulletSpeed", 100);
+        shootDelay = PlayerPrefs.GetFloat("ShootDelay", 0.5f);
 
-        cameraZoom = PlayerPrefs.GetFloat("CameraZoom", 4);
+        cameraZoomLevel = PlayerPrefs.GetInt("CameraZoom", 4);
 
         difficultyMultiplier = PlayerPrefs.GetFloat("DifficultyMultiplier", 1);
     }
