@@ -29,11 +29,17 @@ public class Player : MonoBehaviour
 
     // Score
     public int score;
+    int maxScore = 999999999;
 
     // Shooting
     bool canShootLeft = true, canShootRight = true;
     float bulletSpeed;
     float shootDelayInSeconds;
+
+    int specialAttackCharges;
+
+    // Pause
+    bool pause;
 
 
     void Start()
@@ -66,6 +72,8 @@ public class Player : MonoBehaviour
 
         bulletSpeed = StatsManager.instance.bulletSpeed;
         shootDelayInSeconds = StatsManager.instance.shootDelay;
+
+        specialAttackCharges = StatsManager.instance.specialAttackCharges;
 
         health = maxHealth;
     }
@@ -155,10 +163,42 @@ public class Player : MonoBehaviour
         canShootRight = true;
     }
 
+    // Called in PlayerInput
+    public void SpecialAttack()
+    {
+        if (!canShootLeft || !canShootRight)
+            return;
+        canShootLeft = false;
+        canShootRight = false;
+
+        Vector3 startPosition = transform.position;
+        startPosition.y = 0.7f; // Pistol height
+        Vector3 direction = transform.forward;
+
+        Bullet bullet = BulletManager.instance.SpawnSpecialBullet(startPosition, transform.eulerAngles.y);
+        bullet.rBody.velocity = Vector3.zero;
+        bullet.rBody.AddForce(direction * bulletSpeed);
+
+        Invoke("ShootDelayLeft", shootDelayInSeconds);
+        Invoke("ShootDelayRight", shootDelayInSeconds);
+    }
+
+    // Called in PlayerInput
+    public void Pause()
+    {
+        pause = !pause;
+        Time.timeScale = System.Convert.ToInt32(!pause);
+        UIManager.instance.TogglePausePanel(pause);
+    }
+
     // Called in Bullet.cs
     public void ApplyScore(int specialMultiplier = 1)
     {
         score += RandomScore() * specialMultiplier;
+
+        if (score > maxScore)   // If it somehow gets to this point lmao
+            score = maxScore;
+
         UIManager.instance.UpdateScoreText(score);
     }
 
@@ -177,9 +217,7 @@ public class Player : MonoBehaviour
 
         health -= damage;
         if (health <= 0)
-        {
             Death();
-        }
 
         UIManager.instance.UpdateHealthBar(health, maxHealth);
 
@@ -220,7 +258,7 @@ public class Player : MonoBehaviour
         UIManager.instance.ShowWavePanel("Wave completed!");
 
         int nextWave = StatsManager.instance.wave + 1;
-        float difficultyMultiplier = nextWave * 0.5f;
+        float difficultyMultiplier = nextWave * 0.33f;
 
         int oldScore = PlayerPrefs.GetInt("Score");
         PlayerPrefs.SetInt("Score", score + oldScore);

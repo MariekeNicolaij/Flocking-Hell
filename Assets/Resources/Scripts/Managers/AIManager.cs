@@ -24,6 +24,7 @@ public class AIManager : MonoBehaviour
 
     [HideInInspector]
     public int flockGroupAmount;    // How many groups
+    int groupMultiplier = 3;        // ^ + waveNumber / groupMultiplier = Flocking Hell 👀
     [HideInInspector]
     public int flockSize;          // AI per group
 
@@ -71,13 +72,13 @@ public class AIManager : MonoBehaviour
 
     void GetStats()
     {
-        flockGroupAmount = StatsManager.instance.aiGroupSize;
-        flockSize = StatsManager.instance.aiFlockSize;
+        difficultyMultiplier = StatsManager.instance.difficultyMultiplier;
+
+        flockGroupAmount = StatsManager.instance.aiGroupSize + Mathf.RoundToInt(StatsManager.instance.wave / groupMultiplier);
+        flockSize = Mathf.RoundToInt(StatsManager.instance.aiFlockSize + difficultyMultiplier);
 
         minVelocity = StatsManager.instance.aiMinVelocity;
         maxVelocity = StatsManager.instance.aiMaxVelocity;
-
-        difficultyMultiplier = StatsManager.instance.difficultyMultiplier;
     }
 
     void GenerateSpawnPoints()

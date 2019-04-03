@@ -37,6 +37,9 @@ public class UIManager : MonoBehaviour
     public Slider sfxSlider;
     int sliderSteps = 5;        // So that the slidervalues always rounds to steps of 5
 
+    // Pause
+    public GameObject pausePanel;
+
 
     void Start()
     {
@@ -54,6 +57,10 @@ public class UIManager : MonoBehaviour
         // Player health
         if (healthBar)
             healthBarStartColor = healthBar.color;
+
+        // Pause
+        if (pausePanel)
+            pausePanel.SetActive(false);
 
         // Wave
         SetWaveText();
@@ -133,6 +140,11 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("UpgradeShop");
+    }
+
+    public void TogglePausePanel(bool show)
+    {
+        pausePanel.SetActive(show);
     }
 
     public void UpdateHealthBar(int health, int maxHealth)

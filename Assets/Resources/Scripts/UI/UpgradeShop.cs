@@ -20,12 +20,14 @@ public class UpgradeShop : MonoBehaviour
 
     // Offense
     public UpgradePanel damageLevelPanel;
-    public UpgradePanel bulletAlivePanel;
     public UpgradePanel bulletSpeedPanel;
     public UpgradePanel shootDelayPanel;
 
     // Camera
     public UpgradePanel cameraZoomLevelPanel;
+
+    // Special attack
+    public UpgradePanel specialAttackPanel;
 
     // ------Stats-------
     // Score
@@ -42,12 +44,14 @@ public class UpgradeShop : MonoBehaviour
 
     // Offense
     public float damageLevel;
-    public int bulletAliveTime;
     public int bulletSpeed;
     public float shootDelay;
 
     // Camera
     public int cameraZoomLevel;
+
+    // Special Attack
+    public int specialAttackCharges;
 
     // ------Costs-------
     float costMultiplier = 1.5f;
@@ -62,12 +66,14 @@ public class UpgradeShop : MonoBehaviour
 
     // Offense
     int damageLevelCost;
-    int bulletAliveTimeCost;
     int bulletSpeedCost;
     int shootDelayCost;
 
     // Camera
     int cameraZoomLevelCost;
+
+    // Special attack
+    int specialAttackChargesCost;
 
     // ------Next level upgrades-------
     // Player
@@ -81,12 +87,27 @@ public class UpgradeShop : MonoBehaviour
 
     // Offense
     float damageLevelUpgrade = 0.5f;
-    int bulletAliveTimeUpgrade = 1;
     int bulletSpeedUpgrade = 100;
     float shootDelayUpgrade = 0.1f; // minus
 
     // Camera
     int cameraZoomLevelUpgrade = 1;
+
+    // Special Attack
+    int specialAttackUpgrade = 1;
+
+    // ------Max/Min values for some stats-------
+    // Max
+    int healthMax = 1000;
+    int healthGenerationMax = 20;
+    int speedMax = 10;
+    int laserLengthMax = 8;
+    int bulletSpeedMax = 1000;
+    int cameraZoomLevelMax = 10;
+
+    //Min
+    int healthGenerationDelayMin = 1;
+    float shootDelayMin = 0.1f;
 
 
     void Start()
@@ -113,12 +134,14 @@ public class UpgradeShop : MonoBehaviour
 
         // Offense
         damageLevel = StatsManager.instance.damageLevel;
-        bulletAliveTime = StatsManager.instance.bulletAliveTime;
         bulletSpeed = StatsManager.instance.bulletSpeed;
         shootDelay = StatsManager.instance.shootDelay;
 
         // Camera
         cameraZoomLevel = StatsManager.instance.cameraZoomLevel;
+
+        // Special Attack
+        specialAttackCharges = StatsManager.instance.specialAttackCharges;
     }
 
     void GetCosts()
@@ -134,12 +157,14 @@ public class UpgradeShop : MonoBehaviour
 
         // Offense
         damageLevelCost = PlayerPrefs.GetInt("DamageLevelCost", 10000);
-        bulletAliveTimeCost = PlayerPrefs.GetInt("BulletAliveTimeCost", 3000);
         bulletSpeedCost = PlayerPrefs.GetInt("BulletSpeedCost", 5000);
         shootDelayCost = PlayerPrefs.GetInt("ShootDelayCost", 25000);
 
         // Camera
         cameraZoomLevelCost = PlayerPrefs.GetInt("CameraZoomLevelCost", 20000);
+
+        // Special attack
+        specialAttackChargesCost = PlayerPrefs.GetInt("SpecialAttackCost", 100000);
     }
 
     /// <summary>
@@ -152,22 +177,54 @@ public class UpgradeShop : MonoBehaviour
 
         // --- Panel texts ---
         // Player
-        healthPanel.panelText.text = "Health: \n" + health + " > " + (health + healthUpgrade);
-        healthGenerationPanel.panelText.text = "Health Generation: \n" + healthGeneration + " > " + (healthGeneration + healthGenerationUpgrade);
-        healthGenerationDelayPanel.panelText.text = "HG Delay: \n" + healthGenerationDelay + " > " + (healthGenerationDelay - healthGenerationDelayUpgrade);
-        speedPanel.panelText.text = "Movespeed: \n" + speed + " > " + (speed + speedUpgrade);
+        healthPanel.panelText.text = "Health (" + health + ") : \n" +
+            ((IsMaxedOut(health, healthMax)) ?
+            "Maxed out!" :
+            health + " > " + (health + healthUpgrade));
+
+        healthGenerationPanel.panelText.text = "Health Generation (" + healthGeneration + ") : \n" +                         // Base text
+            ((IsMaxedOut(healthGeneration, healthGenerationMax)) ?                                   // If it is maxed out
+            "Maxed out!" :                                                                           // Add this text to it otherwise
+            healthGeneration + " > " + (healthGeneration + healthGenerationUpgrade));                // Add this
+
+        healthGenerationDelayPanel.panelText.text = "Health Generation Delay (" + healthGenerationDelay + ") : \n" +// Base text
+            ((IsMaxedOut(healthGenerationDelay, healthGenerationDelayMin, false)) ?                  // If it is 'minned' out
+            "Maxed out!" :                                                                           // Add this text to it otherwise
+            healthGenerationDelay + " > " + (healthGenerationDelay - healthGenerationDelayUpgrade)); // Add this
+
+        speedPanel.panelText.text = "Movespeed (" + speed + ") : \n" +
+            ((IsMaxedOut(speed, speedMax)) ?
+            "Maxed out!" :
+            speed + " > " + (speed + speedUpgrade));
 
         // Laser
-        laserLengthPanel.panelText.text = "Laser Length: \n" + laserLength + " > " + (laserLength + laserLengthUpgrade);
+        laserLengthPanel.panelText.text = "Laser Length (" + laserLength + ") : \n" +
+            ((IsMaxedOut(laserLength, laserLengthMax)) ?
+            "Maxed out!" :
+            laserLength + " > " + (laserLength + laserLengthUpgrade));
 
         // Offense
-        damageLevelPanel.panelText.text = "Damage Level: \n" + damageLevel + " > " + (damageLevel + damageLevelUpgrade);
-        bulletAlivePanel.panelText.text = "Bullet Alive Time: \n" + bulletAliveTime + " > " + (bulletAliveTime + bulletAliveTimeUpgrade);
-        bulletSpeedPanel.panelText.text = "Bullet Speed: \n" + bulletSpeed + " > " + (bulletSpeed + bulletSpeedUpgrade);
-        shootDelayPanel.panelText.text = "Shoot Delay: \n" + shootDelay + " > " + (shootDelay - shootDelayUpgrade);
+        damageLevelPanel.panelText.text = "Damage Level (" + damageLevel + ") : \n" + damageLevel + " > " + (damageLevel + damageLevelUpgrade);
+
+        bulletSpeedPanel.panelText.text = "Bullet Speed (" + bulletSpeed + ") : \n" +
+            ((IsMaxedOut(bulletSpeed, bulletSpeedMax)) ?
+            "Maxed out!" :
+            bulletSpeed + " > " + (bulletSpeed + bulletSpeedUpgrade));
+
+        shootDelayPanel.panelText.text = "Shoot Delay (" + shootDelay + ") : \n" +
+            ((IsMaxedOut(shootDelay, shootDelayMin, false)) ?
+            "Maxed out!" :
+            shootDelay + " > " + (shootDelay - shootDelayUpgrade));
 
         // Camera
-        cameraZoomLevelPanel.panelText.text = "Camera Zoom Level: \n" + cameraZoomLevel + " > " + (cameraZoomLevel + cameraZoomLevelUpgrade);
+        cameraZoomLevelPanel.panelText.text = "Camera Zoom Level (" + cameraZoomLevel + ") : \n" +
+            ((IsMaxedOut(cameraZoomLevel, cameraZoomLevelMax)) ?
+            "Maxed out!" :
+            cameraZoomLevel + " > " + (cameraZoomLevel + cameraZoomLevelUpgrade));
+
+        // Special attack
+        specialAttackPanel.panelText.text = "Special Attack Charges: \n" +
+            specialAttackCharges + " > " + (specialAttackCharges + specialAttackUpgrade);
 
         // --- Button texts (Cost) ---
         // Player
@@ -181,12 +238,26 @@ public class UpgradeShop : MonoBehaviour
 
         // Offense
         damageLevelPanel.upgradeButtonText.text = "$ " + damageLevelCost;
-        bulletAlivePanel.upgradeButtonText.text = "$ " + bulletAliveTimeCost;
         bulletSpeedPanel.upgradeButtonText.text = "$ " + bulletSpeedCost;
         shootDelayPanel.upgradeButtonText.text = "$ " + shootDelayCost;
 
         // Camera
         cameraZoomLevelPanel.upgradeButtonText.text = "$ " + cameraZoomLevelCost;
+
+        // Special Attack
+        specialAttackPanel.upgradeButtonText.text = "$ " + specialAttackChargesCost;
+    }
+
+    // Checks if (int)currentstat is maxed out
+    bool IsMaxedOut(int currentValue, int maxedOutValue, bool checkForMaxedOut = true) // Check if it maxed out, otherwise check if it mins out (get it?)
+    {
+        return (checkForMaxedOut) ? (currentValue >= maxedOutValue) : (currentValue <= maxedOutValue);
+    }
+
+    // Checks if (float)currentstat is maxed out
+    bool IsMaxedOut(float currentValue, float maxedOutValue, bool checkForMaxedOut = true) // Check if it maxed out, otherwise check if it mins out (get it?)
+    {
+        return (checkForMaxedOut) ? (currentValue >= maxedOutValue) : (currentValue <= maxedOutValue);
     }
 
     /// <summary>
@@ -194,16 +265,16 @@ public class UpgradeShop : MonoBehaviour
     /// </summary>
     void ToggleButtons()
     {
-        healthPanel.upgradeButton.interactable = (healthCost <= score);
-        healthGenerationPanel.upgradeButton.interactable = (healthGenerationCost <= score);
-        healthGenerationDelayPanel.upgradeButton.interactable = (healthGenerationDelayCost <= score);
-        speedPanel.upgradeButton.interactable = (speedCost <= score);
-        laserLengthPanel.upgradeButton.interactable = (laserLengthCost <= score);
+        healthPanel.upgradeButton.interactable = (healthCost <= score && !IsMaxedOut(health, healthMax));
+        healthGenerationPanel.upgradeButton.interactable = (healthGenerationCost <= score && !IsMaxedOut(healthGeneration, healthGenerationMax));
+        healthGenerationDelayPanel.upgradeButton.interactable = (healthGenerationDelayCost <= score && !IsMaxedOut(healthGenerationDelay, healthGenerationDelayMin, false));
+        speedPanel.upgradeButton.interactable = (speedCost <= score && !IsMaxedOut(speed, speedMax));
+        laserLengthPanel.upgradeButton.interactable = (laserLengthCost <= score && !IsMaxedOut(laserLength, laserLengthMax));
         damageLevelPanel.upgradeButton.interactable = (damageLevelCost <= score);
-        bulletAlivePanel.upgradeButton.interactable = (bulletAliveTimeCost <= score);
-        bulletSpeedPanel.upgradeButton.interactable = (bulletSpeedCost <= score);
-        shootDelayPanel.upgradeButton.interactable = (shootDelayCost <= score);
-        cameraZoomLevelPanel.upgradeButton.interactable = (cameraZoomLevelCost <= score);
+        bulletSpeedPanel.upgradeButton.interactable = (bulletSpeedCost <= score && !IsMaxedOut(bulletSpeed, bulletSpeedMax));
+        shootDelayPanel.upgradeButton.interactable = (shootDelayCost <= score && !IsMaxedOut(shootDelay, shootDelayMin, false));
+        cameraZoomLevelPanel.upgradeButton.interactable = (cameraZoomLevelCost <= score && !IsMaxedOut(cameraZoomLevel, cameraZoomLevelMax));
+        specialAttackPanel.upgradeButton.interactable = (specialAttackChargesCost <= score);
     }
 
     void SaveStatsAndCosts()
@@ -219,11 +290,12 @@ public class UpgradeShop : MonoBehaviour
         PlayerPrefs.SetInt("LaserLength", laserLength);
 
         PlayerPrefs.SetFloat("DamageLevel", damageLevel);
-        PlayerPrefs.SetInt("BulletAliveTime", bulletAliveTime);
         PlayerPrefs.SetInt("BulletSpeed", bulletSpeed);
         PlayerPrefs.SetFloat("ShootDelay", shootDelay);
 
         PlayerPrefs.SetInt("CameraZoom", cameraZoomLevel);
+
+        PlayerPrefs.SetInt("SpecialAttack", 1);
 
         // -------Costs--------
         // Player
@@ -237,7 +309,6 @@ public class UpgradeShop : MonoBehaviour
 
         // Offense
         PlayerPrefs.SetInt("DamageLevelCost", damageLevelCost);
-        PlayerPrefs.SetInt("BulletAliveTimeCost", bulletAliveTimeCost);
         PlayerPrefs.SetInt("BulletSpeedCost", bulletSpeedCost);
         PlayerPrefs.SetInt("ShootDelayCost", shootDelayCost);
 
@@ -281,11 +352,6 @@ public class UpgradeShop : MonoBehaviour
                 damageLevel += damageLevelUpgrade;
                 damageLevelCost = Mathf.RoundToInt(damageLevelCost * costMultiplier);
                 break;
-            case Upgrades.BulletAliveTime:
-                score -= bulletAliveTimeCost;
-                bulletAliveTime += bulletAliveTimeUpgrade;
-                bulletAliveTimeCost = Mathf.RoundToInt(bulletAliveTimeCost * costMultiplier);
-                break;
             case Upgrades.BulletSpeed:
                 score -= bulletSpeedCost;
                 bulletSpeed += bulletSpeedUpgrade;
@@ -300,6 +366,11 @@ public class UpgradeShop : MonoBehaviour
                 score -= cameraZoomLevelCost;
                 cameraZoomLevel += cameraZoomLevelUpgrade;
                 cameraZoomLevelCost = Mathf.RoundToInt(cameraZoomLevelCost * costMultiplier);
+                break;
+            case Upgrades.SpecialAttack:
+                score -= specialAttackChargesCost;
+                specialAttackCharges += specialAttackUpgrade;
+                specialAttackChargesCost = Mathf.RoundToInt(specialAttackChargesCost * costMultiplier);
                 break;
         }
 
@@ -331,8 +402,8 @@ public enum Upgrades
     Speed = 3,
     DamageLevel = 4,
     LaserLength = 5,
-    BulletAliveTime = 6,
-    BulletSpeed = 7,
-    ShootDelay = 8,
-    CameraZoomLevel = 9
+    BulletSpeed = 6,
+    ShootDelay = 7,
+    CameraZoomLevel = 8,
+    SpecialAttack = 9
 }

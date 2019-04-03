@@ -616,6 +616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1040724693}
   - component: {fileID: 1040724694}
+  - component: {fileID: 6736173629356728725}
   m_Layer: 9
   m_Name: CyborgGirl
   m_TagString: Untagged
@@ -731,6 +732,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.03470871, y: -0.0038127229, z: -0.0000005662441}
     m_Extent: {x: 0.47640923, y: 0.08893526, z: 0.27057496}
   m_DirtyAABB: 0
+--- !u!136 &6736173629356728725
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040724692}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.420159
+  m_Direction: 1
+  m_Center: {x: 0.0000014554673, y: 1.2328912, z: -0.04648851}
 --- !u!1 &1079517048
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +944,6 @@ GameObject:
   - component: {fileID: 1317301250}
   - component: {fileID: 1317301260}
   - component: {fileID: 1317301253}
-  - component: {fileID: 1317301256}
   - component: {fileID: 1317301257}
   - component: {fileID: 1317301252}
   - component: {fileID: 1317301259}
@@ -992,19 +1006,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!135 &1317301256
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317301251}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!65 &1317301257
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1033,6 +1034,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   leftPistol: {fileID: 1746014274}
   rightPistol: {fileID: 838180737}
+  health: 0
+  maxHealth: 0
   score: 0
 --- !u!114 &1317301259
 MonoBehaviour:

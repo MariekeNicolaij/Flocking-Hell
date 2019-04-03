@@ -3,13 +3,6 @@ Pathfinding niet echt gebruikt maar wel navmeshobstacles enzo
 
 --------AI---------
 Klein beetje licht geven
-Flocking loopt niet helemaal lekker(Je ziet niet dat het flocked)
-FlockState beter maken(zorgen dat er cohesion, seperation en alignment variablen komen)
-Miniboss nadat flockingai dood is? Of na 3 waves ofzo
-Per 3 levels de flockSize vergroten per 5
-Meer damage done door ai per level?
-AI speed hoger per level
-AI moelijker maken per level(ogheb ik dat al gedaan?)
 
 --------Audio---------
 Schieten
@@ -29,21 +22,10 @@ difficultymultiplier gebruiken overal (waar?)
 Rainbow mode?
 
 --------UI---------
-Pause scherm
 Hitpoints (ook voor healthgeneration)
 Highscore moet beetje animeren (groot klein animatie, klein beetje roterend?, color flash?)
 Rood flashscherm if damaged
-HUD wat groter (testen op 1920x1080p)
-
------Upgradeshop----
-Checks bouwen voor dingen die niet onder 0 mogen komen (maxed out)(HG delay(minimaal 1) en shootdelay(minimaal 0.1f))
-Max waardes instellen voor sommige dingen (HG, speed, laser length, bullet alive time, bullet speed, camera zoom level)
 
 -----Te Testen------
-Of gekochte upgrade wel werken
-Verschillende AI spawns per aantal waves
-Waardes van de StatsManager of ze wel lekker spelen
 Controller support
-Receive damage delay(Nu te sloom?(Wave 1))
 Highscore
-slidervalue 0 save ( vanwege het delen door sliderstepts)

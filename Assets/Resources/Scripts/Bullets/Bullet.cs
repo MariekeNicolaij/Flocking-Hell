@@ -13,14 +13,18 @@ public class Bullet : MonoBehaviour
 
     Vector3 startPosition;
 
-    float minDamage, maxDamage;
-    float bulletAliveTime;
+    public float minDamage, maxDamage;
+    public float bulletAliveTime;
+    bool special;
 
-    public void InitiateBullet(Vector3 startPosition, float eulerY)
+
+    public void InitiateBullet(Vector3 startPosition, float eulerY, bool special = false)
     {
         this.startPosition = startPosition;
         transform.position = startPosition;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, eulerY, transform.eulerAngles.z);
+
+        this.special = special;
 
         rBody = GetComponent<Rigidbody>();
 
@@ -29,16 +33,28 @@ public class Bullet : MonoBehaviour
         particles = GetComponentInChildren<ParticleSystem>();
 
         line = gameObject.AddComponent<LineRenderer>();
-        line.material.color = lineColor;
-        line.widthMultiplier = 0.005f;
 
+        if (special)
+        {
+            lineColor = Color.yellow;
+            line.widthMultiplier = 0.05f;
+
+            bulletAliveTime = 20;
+            minDamage *= 5;
+            maxDamage *= 5;
+        }
+        else
+        {
+            line.widthMultiplier = 0.005f;
+        }
+
+        line.material.color = lineColor;
         Invoke("DestroyBullet", bulletAliveTime);
     }
 
-
     void GetStats()
     {
-        bulletAliveTime = StatsManager.instance.bulletAliveTime;
+        bulletAliveTime = 1;
         minDamage = StatsManager.instance.minDamage;
         maxDamage = StatsManager.instance.maxDamage;
     }
@@ -54,22 +70,25 @@ public class Bullet : MonoBehaviour
         line.SetPositions(new Vector3[2] { startPosition, transform.position });
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == Layer.AI)
         {
             AI ai = other.gameObject.GetComponent<AI>();
 
-            if (other.collider.tag == "AI Flocking")
+            if (other.tag == "AI Flocking")
             {
                 DamageAI(ai);
             }
-            if (other.collider.tag == "AI Normal")
+            if (other.tag == "AI Normal")
             {
-                DamageAI(ai, false);    // AI is not part of a flocking group
+                DamageAI(ai, false);    // This AI is not part of a flocking group
             }
         }
 
+        if (special)
+            return;
+        
         // Rumble babyy
         Camera.main.gameObject.GetComponent<Follow>().rumbleTime += 0.1f;
         PlayDestroyAnimation();

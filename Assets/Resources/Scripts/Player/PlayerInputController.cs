@@ -15,7 +15,9 @@ public class PlayerInputController : MonoBehaviour
     {
         Move();
         Shoot();
+        SpecialAttack();
         FaceCursorDirection();
+        Pause();
     }
 
     void Move()
@@ -47,6 +49,14 @@ public class PlayerInputController : MonoBehaviour
         }
     }
 
+    void SpecialAttack()
+    {
+        if (Input.GetButtonDown("Special Attack"))
+        {
+            player.SpecialAttack();
+        }
+    }
+
     void FaceCursorDirection()
     {
         float x = 0, y = 0, angle = 0;
@@ -67,5 +77,13 @@ public class PlayerInputController : MonoBehaviour
         angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
         angle -= 90;    // Rotate correctly to mouse direction (It is 90 degrees off)
         transform.rotation = Quaternion.AngleAxis(-angle, Vector3.up);
+    }
+
+    void Pause()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            player.Pause();
+        }
     }
 }

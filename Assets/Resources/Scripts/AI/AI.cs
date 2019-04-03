@@ -41,11 +41,11 @@ public class AI : MonoBehaviour
 
     void GetStats()
     {
-        health = StatsManager.instance.aiHealth;
-        minDamage = StatsManager.instance.aiMinDamage;
-        maxDamage = StatsManager.instance.aiMaxDamage;
-        minVelocity = AIManager.instance.minVelocity;
-        maxVelocity = AIManager.instance.maxVelocity;
+        health = Mathf.RoundToInt(StatsManager.instance.aiHealth * StatsManager.instance.difficultyMultiplier);
+        minDamage = StatsManager.instance.aiMinDamage * StatsManager.instance.difficultyMultiplier;
+        maxDamage = StatsManager.instance.aiMaxDamage * StatsManager.instance.difficultyMultiplier;
+        minVelocity = AIManager.instance.minVelocity;// * StatsManager.instance.difficultyMultiplier;
+        maxVelocity = AIManager.instance.maxVelocity * StatsManager.instance.difficultyMultiplier;
 
         maxHealth = health;
     }
@@ -68,7 +68,6 @@ public class AI : MonoBehaviour
     public void ReceiveDamage(int damage)
     {
         health -= damage;
-        Debug.Log(health);
 
         if(health < 0)
         {
