@@ -49,9 +49,11 @@ public class LaserSight : MonoBehaviour
         direction.y = 0;
 
         if (Physics.Raycast(transform.position, direction, out hit, laserLength))
-            if (hit.collider.gameObject.layer != Layer.Player && hit.collider.gameObject.layer != Layer.Bullet)
+        {
+            int layer = hit.collider.gameObject.layer;
+            if (layer != Layer.Player && layer != Layer.Bullet && layer != Layer.Fire)
                 return hit.point;
-
+        }
         return transform.position + (direction * laserLength);
     }
 }

@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
     public Text healthText;
     Color healthBarStartColor;
 
+    // Charges (Special Attack)
+    public Text chargesText;
+
     // Score
     public Text scoreText;
 
@@ -39,6 +42,12 @@ public class UIManager : MonoBehaviour
 
     // Pause
     public GameObject pausePanel;
+
+    // Hitpoint
+    public HitPoint hitPointsPrefab;
+
+    // Flash Ahaa
+    public GameObject flash; // Red flash when damaged
 
 
     void Start()
@@ -61,6 +70,10 @@ public class UIManager : MonoBehaviour
         // Pause
         if (pausePanel)
             pausePanel.SetActive(false);
+
+        // Flash
+        if (flash)
+            flash.SetActive(false);
 
         // Wave
         SetWaveText();
@@ -153,6 +166,11 @@ public class UIManager : MonoBehaviour
         healthText.text = health + "/" + maxHealth;
     }
 
+    public void UpdateChargesText(int charges)
+    {
+        chargesText.text = "Charges: " + charges;
+    }
+
     public void UpdateScoreText(int score)
     {
         scoreText.text = "Score: " + score;
@@ -163,26 +181,21 @@ public class UIManager : MonoBehaviour
         aiCountText.text = "Enemies alive: " + aiAlive;
     }
 
-    // Show upgradable stats on screen for testing purposes
-    //void OnGUI()
-    //{
-    //    GUIStyle style = new GUIStyle();
-    //    style.font = (Font)Resources.Load("Fonts/Font");
-    //    style.fontSize = 20;
-    //    style.normal.textColor = Color.white;
+    public void SpawnHitPoint(Vector3 position, Color color, int hitPoints)
+    {
+        HitPoint hitPoint = Instantiate(hitPointsPrefab);
+        hitPoint.Initiate(position, color, hitPoints);
+    }
 
-    //    GUI.TextArea(
-    //        new Rect(Screen.width * 0.05f, Screen.height * 0.3f, Screen.width * 0.2f, Screen.height * 0.2f),
-    //        "Max health: \t" + StatsManager.instance.health + "\n" +
-    //        "Health generation: \t" + StatsManager.instance.healthGeneration + "\n" +
-    //        "Generation delay: \t" + StatsManager.instance.healthGenerationDelay + "\n" +
-    //        "Laser length: \t" + StatsManager.instance.laserLength + "\n" +
-    //        "Min damage: \t" + StatsManager.instance.minDamage + "\n" +
-    //        "Max damage: \t" + StatsManager.instance.maxDamage + "\n" +
-    //        "Bullet alive time: \t" + StatsManager.instance.bulletAliveTime + "\n" +
-    //        "Bullet speed: \t" + StatsManager.instance.bulletSpeed + "\n" +
-    //        "Shoot delay: \t" + StatsManager.instance.shootDelay + "\n" +
-    //        "Camera zoom: \t" + StatsManager.instance.cameraZoom + "\n",
-    //        style);
-    //}
+    public void Flash()
+    {
+        flash.SetActive(true);
+
+        Invoke("DisableFlash", 0.05f);
+    }
+
+    void DisableFlash()
+    {
+        flash.SetActive(false);
+    }
 }

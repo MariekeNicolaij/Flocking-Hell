@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     // Damaged
     float gettingHitDelay = 0.5f;
     bool isDamaged;
-    bool isDead;
+    public bool isDead;
 
     // Health
     bool isGeneratingHealth;
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         InvokeRepeating("RegenerateHealth", healthGenerationDelay, healthGenerationDelay);
 
         // Because UIManager does not really 'exist' at this point
-        Invoke("UpdateHealthBarOnceAtStart", 0.1f);
+        Invoke("UpdateUIOnceAtStart", 0.1f);
     }
 
     void GetStats()
@@ -78,9 +78,11 @@ public class Player : MonoBehaviour
         health = maxHealth;
     }
 
-    void UpdateHealthBarOnceAtStart()
+    void UpdateUIOnceAtStart()
     {
+        UIManager.instance.UpdateScoreText(score);
         UIManager.instance.UpdateHealthBar(health, maxHealth);
+        UIManager.instance.UpdateChargesText(specialAttackCharges);
     }
 
     // InvokeRepeating
@@ -89,11 +91,18 @@ public class Player : MonoBehaviour
         isGeneratingHealth = true;
 
         if (health < maxHealth)
+        {
             health += healthGeneration;
-        else if (health > maxHealth)    // Dont want it to go over max lol
-            health = maxHealth;
 
-        UIManager.instance.UpdateHealthBar(health, maxHealth);
+            // Hitpoint UI
+            UIManager.instance.SpawnHitPoint(transform.position, Colors.green, -healthGeneration);
+            // Update Healthbar
+            UIManager.instance.UpdateHealthBar(health, maxHealth);
+        }
+        else if (health > maxHealth)    // Dont want it to go over max lol
+        {
+            health = maxHealth;
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -166,11 +175,8 @@ public class Player : MonoBehaviour
     // Called in PlayerInput
     public void SpecialAttack()
     {
-        if (!canShootLeft || !canShootRight)
+        if (specialAttackCharges <= 0)
             return;
-        canShootLeft = false;
-        canShootRight = false;
-
         Vector3 startPosition = transform.position;
         startPosition.y = 0.7f; // Pistol height
         Vector3 direction = transform.forward;
@@ -179,8 +185,8 @@ public class Player : MonoBehaviour
         bullet.rBody.velocity = Vector3.zero;
         bullet.rBody.AddForce(direction * bulletSpeed);
 
-        Invoke("ShootDelayLeft", shootDelayInSeconds);
-        Invoke("ShootDelayRight", shootDelayInSeconds);
+        // Update Text
+        UIManager.instance.UpdateChargesText(specialAttackCharges);
     }
 
     // Called in PlayerInput
@@ -219,6 +225,11 @@ public class Player : MonoBehaviour
         if (health <= 0)
             Death();
 
+        // Hitpoint UI
+        UIManager.instance.SpawnHitPoint(transform.position, Colors.red, damage);
+        // Flash
+        UIManager.instance.Flash();
+        // Update health bar
         UIManager.instance.UpdateHealthBar(health, maxHealth);
 
         Invoke("DamageDelay", gettingHitDelay);
@@ -264,6 +275,8 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("Score", score + oldScore);
         PlayerPrefs.SetInt("Wave", nextWave);
         PlayerPrefs.SetFloat("DifficultyMultiplier", difficultyMultiplier);
+
+        Cursor.visible = true;
 
         Invoke("LoadUpgradeShop", 5); // 5 = delay in seconds
     }

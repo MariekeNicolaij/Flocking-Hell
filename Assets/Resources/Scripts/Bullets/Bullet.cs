@@ -8,13 +8,14 @@ public class Bullet : MonoBehaviour
 
     ParticleSystem particles;
 
+    public Material lineMaterial;
     LineRenderer line;
-    Color lineColor = new Color(0, 100, 255);
 
     Vector3 startPosition;
 
     public float minDamage, maxDamage;
-    public float bulletAliveTime;
+    [Range(1, 10)]
+    public float bulletAliveTime = 1;
     bool special;
 
 
@@ -36,10 +37,8 @@ public class Bullet : MonoBehaviour
 
         if (special)
         {
-            lineColor = Color.yellow;
             line.widthMultiplier = 0.05f;
 
-            bulletAliveTime = 20;
             minDamage *= 5;
             maxDamage *= 5;
         }
@@ -48,13 +47,12 @@ public class Bullet : MonoBehaviour
             line.widthMultiplier = 0.005f;
         }
 
-        line.material.color = lineColor;
+        line.material = lineMaterial;
         Invoke("DestroyBullet", bulletAliveTime);
     }
 
     void GetStats()
     {
-        bulletAliveTime = 1;
         minDamage = StatsManager.instance.minDamage;
         maxDamage = StatsManager.instance.maxDamage;
     }
@@ -88,7 +86,7 @@ public class Bullet : MonoBehaviour
 
         if (special)
             return;
-        
+
         // Rumble babyy
         Camera.main.gameObject.GetComponent<Follow>().rumbleTime += 0.1f;
         PlayDestroyAnimation();
@@ -108,6 +106,9 @@ public class Bullet : MonoBehaviour
 
         // Apply damage to AI
         ai.ReceiveDamage(damage);
+
+        // Hitpoint UI
+        UIManager.instance.SpawnHitPoint(ai.transform.position, Colors.red, damage);
     }
 
     void PlayDestroyAnimation()

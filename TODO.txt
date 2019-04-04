@@ -1,9 +1,6 @@
 ---REPORT---
 Pathfinding niet echt gebruikt maar wel navmeshobstacles enzo
 
---------AI---------
-Klein beetje licht geven
-
 --------Audio---------
 Schieten
 Bullet iets raakt
@@ -14,18 +11,13 @@ Achtergrond muziek
 player doodgaat
 Selectie geluiden
 
--------Game--------
-Dark theme(hoeken van de scherm een soort rondje wat nog wel zichtbaar is)
-Spooky Mist
-Skybox ook spooky maken
-difficultymultiplier gebruiken overal (waar?)
-Rainbow mode?
-
---------UI---------
-Hitpoints (ook voor healthgeneration)
-Highscore moet beetje animeren (groot klein animatie, klein beetje roterend?, color flash?)
-Rood flashscherm if damaged
-
 -----Te Testen------
 Controller support
 Highscore
+
+Gameicon
+Splash screen
+
+------Test results------
+dood gaat naar upgradeshop?
+Als je iets koopt en kan het niet weer kopen dan is de focus weg (met controller)

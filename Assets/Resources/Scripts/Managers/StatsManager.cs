@@ -82,7 +82,7 @@ public class StatsManager : MonoBehaviour
 
         laserLength = PlayerPrefs.GetInt("LaserLength", 3);
 
-        score = PlayerPrefs.GetInt("Score", 5000);
+        score = PlayerPrefs.GetInt("Score", 10000);
         highscore = PlayerPrefs.GetInt("Highscore", 0);
 
         damageLevel = PlayerPrefs.GetFloat("DamageLevel", 1);

@@ -148,23 +148,23 @@ public class UpgradeShop : MonoBehaviour
     {
         // Player
         healthCost = PlayerPrefs.GetInt("HealthCost", 1000);
-        healthGenerationCost = PlayerPrefs.GetInt("HealthGenerationCost", 10000);
-        healthGenerationDelayCost = PlayerPrefs.GetInt("HealthGenerationDelayCost", 20000);
+        healthGenerationCost = PlayerPrefs.GetInt("HealthGenerationCost", 7500);
+        healthGenerationDelayCost = PlayerPrefs.GetInt("HealthGenerationDelayCost", 15000);
         speedCost = PlayerPrefs.GetInt("SpeedCost", 5000);
 
         // Laser
         laserLengthCost = PlayerPrefs.GetInt("LaserLengthCost", 1000);
 
         // Offense
-        damageLevelCost = PlayerPrefs.GetInt("DamageLevelCost", 10000);
+        damageLevelCost = PlayerPrefs.GetInt("DamageLevelCost", 7500);
         bulletSpeedCost = PlayerPrefs.GetInt("BulletSpeedCost", 5000);
-        shootDelayCost = PlayerPrefs.GetInt("ShootDelayCost", 25000);
+        shootDelayCost = PlayerPrefs.GetInt("ShootDelayCost", 10000);
 
         // Camera
-        cameraZoomLevelCost = PlayerPrefs.GetInt("CameraZoomLevelCost", 20000);
+        cameraZoomLevelCost = PlayerPrefs.GetInt("CameraZoomLevelCost", 15000);
 
         // Special attack
-        specialAttackChargesCost = PlayerPrefs.GetInt("SpecialAttackCost", 100000);
+        specialAttackChargesCost = PlayerPrefs.GetInt("SpecialAttackCost", 75000);
     }
 
     /// <summary>

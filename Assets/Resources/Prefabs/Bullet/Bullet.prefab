@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 235497701}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 2719760473604121744}
   m_Father: {fileID: 0}
@@ -130,9 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rBody: {fileID: 0}
+  lineMaterial: {fileID: 2100000, guid: 1ab924e3becf3014cba33b3801847052, type: 2}
   minDamage: 0
   maxDamage: 0
-  bulletAliveTime: 0
+  bulletAliveTime: 1
 --- !u!136 &4423909970205436550
 CapsuleCollider:
   m_ObjectHideFlags: 0

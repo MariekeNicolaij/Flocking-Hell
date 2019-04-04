@@ -130,9 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rBody: {fileID: 0}
+  lineMaterial: {fileID: 2100000, guid: dfe9de6f3d50aff4fa3bcfab2be799a2, type: 2}
   minDamage: 0
   maxDamage: 0
-  bulletAliveTime: 0
+  bulletAliveTime: 10
 --- !u!136 &4423909970205436550
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class PlayerInputController : MonoBehaviour
 
     void Update()
     {
+        if (player.isDead)
+            return;
         Move();
         Shoot();
         SpecialAttack();

@@ -22,6 +22,7 @@ public class AI : MonoBehaviour
     Material healthBarMaterial;
     public int health, maxHealth;
     public float minDamage, maxDamage;
+    TextMesh healthText;
 
     [HideInInspector]
     public bool isBeingDestroyed;   // So it does not get 'destroyed twice' (because sometimes when you shoot with 2 bullets this would happen)
@@ -34,8 +35,10 @@ public class AI : MonoBehaviour
         GetStats();
 
         if (healthBar)
+        {
             healthBarMaterial = healthBar.GetComponent<Renderer>().material;
-
+            healthText = healthBar.GetComponentInChildren<TextMesh>();
+        }
         stateManager = new StateManager(this, (isFlock) ? (State)new FlockState() : (State)new NormalState());
     }
 
@@ -44,7 +47,7 @@ public class AI : MonoBehaviour
         health = Mathf.RoundToInt(StatsManager.instance.aiHealth * StatsManager.instance.difficultyMultiplier);
         minDamage = StatsManager.instance.aiMinDamage * StatsManager.instance.difficultyMultiplier;
         maxDamage = StatsManager.instance.aiMaxDamage * StatsManager.instance.difficultyMultiplier;
-        minVelocity = AIManager.instance.minVelocity;// * StatsManager.instance.difficultyMultiplier;
+        minVelocity = AIManager.instance.minVelocity;
         maxVelocity = AIManager.instance.maxVelocity * StatsManager.instance.difficultyMultiplier;
 
         maxHealth = health;
@@ -75,6 +78,7 @@ public class AI : MonoBehaviour
             PlayDeathAnimation();
         }
 
+        // Health bar
         Color blue = Color.blue;
         Color red = Color.red;
         blue.a = 0.5f;
@@ -82,6 +86,8 @@ public class AI : MonoBehaviour
 
         if(healthBarMaterial)
             healthBarMaterial.color = Color.Lerp(red, blue, (float)health / (float)maxHealth); // Casten naar float omdat het een normalized value nodig heeft
+        // Health bar text
+        healthText.text = health.ToString();
     }
 
     void PlayDeathAnimation()
