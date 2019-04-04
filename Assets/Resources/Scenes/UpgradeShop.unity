@@ -1945,7 +1945,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: a21b496448bdd1942b5809599ce410f2, type: 3}
-    m_FontSize: 32
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -2722,6 +2722,7 @@ MonoBehaviour:
     upgradeButton: {fileID: 1359658634}
     upgradeButtonText: {fileID: 1359658633}
     panelText: {fileID: 994734219}
+  focus: {fileID: 7620599741990466629}
   score: 0
   health: 0
   healthGeneration: 0
@@ -2732,7 +2733,7 @@ MonoBehaviour:
   bulletSpeed: 0
   shootDelay: 0
   cameraZoomLevel: 0
-  specialAttack: 0
+  specialAttackCharges: 0
 --- !u!4 &1526654551
 Transform:
   m_ObjectHideFlags: 0
@@ -2773,7 +2774,7 @@ MonoBehaviour:
   bulletSpeed: 0
   shootDelay: 0
   cameraZoomLevel: 0
-  specialAttack: 0
+  specialAttackCharges: 0
   difficultyMultiplier: 0
   aiHealth: 0
   aiMinDamage: 0

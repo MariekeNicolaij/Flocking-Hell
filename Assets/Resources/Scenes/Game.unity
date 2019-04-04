@@ -5707,6 +5707,100 @@ AudioSource:
     type: 3}
   m_PrefabInstance: {fileID: 862460776}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &877035610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 877035611}
+  - component: {fileID: 877035614}
+  - component: {fileID: 877035613}
+  - component: {fileID: 877035612}
+  m_Layer: 5
+  m_Name: Waves text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &877035611
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877035610}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1841156715}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -275, y: -115}
+  m_SizeDelta: {x: 290, y: 42}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &877035612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877035610}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
+--- !u!114 &877035613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877035610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a21b496448bdd1942b5809599ce410f2, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 48
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Wave: 0'
+--- !u!222 &877035614
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877035610}
+  m_CullTransparentMesh: 0
 --- !u!1 &1016616168
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,7 +6005,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1841156715}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -5965,7 +6059,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Enemies left: 00000'
+  m_Text: 'Enemies left: 0'
 --- !u!222 &1106099622
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6143,10 +6237,10 @@ MonoBehaviour:
   aliveNormalAI: []
   flockingAIPrefab:
   - {fileID: 2200658557626997448, guid: 674b91ec586a4e5449fdf9ce8d87705b, type: 3}
-  normalAIPrefab:
-  - {fileID: 63238631956973671, guid: 740264d27088733479cb52de90f50cb4, type: 3}
+  bossPrefab: {fileID: 2200658557626997448, guid: 52d3e4595609f4c4ba94f6e808acf973,
+    type: 3}
   groupSpawnPoints: []
-  player: {fileID: 0}
+  player: {fileID: 1317301251}
   AIParent: {fileID: 1536238527}
   flockGroupAmount: 4
   flockSize: 10
@@ -6168,10 +6262,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5191f944f279aae4fa9976ba90438a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 0}
   highscoreText: {fileID: 0}
   wavePanel: {fileID: 1725036956}
-  waveText: {fileID: 650105916}
+  wavePanelText: {fileID: 650105916}
+  waveText: {fileID: 877035613}
   healthBarWrap: {fileID: 0}
   healthBar: {fileID: 2082578522}
   healthText: {fileID: 1046328943}
@@ -6339,7 +6433,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1841156715}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6794,6 +6888,7 @@ RectTransform:
   - {fileID: 1725036955}
   - {fileID: 2082578521}
   - {fileID: 541325295}
+  - {fileID: 877035611}
   - {fileID: 1360817893}
   - {fileID: 1106099619}
   - {fileID: 1870662975}
@@ -6916,7 +7011,7 @@ RectTransform:
   - {fileID: 1901521956}
   - {fileID: 2134731574}
   m_Father: {fileID: 1841156715}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

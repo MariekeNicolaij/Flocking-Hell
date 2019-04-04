@@ -8,14 +8,12 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    // Cursor
-    public Texture2D cursor;
-
     // Highscore
     public Text highscoreText;
 
     // Wave
     public Image wavePanel;
+    public Text wavePanelText;
     public Text waveText;
     bool wavePanelAnimated;
     float disableWavePanelDelay = 2;
@@ -85,8 +83,6 @@ public class UIManager : MonoBehaviour
     /// </summary>
     void SetCursor()
     {
-        if (cursor)
-            Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
         Cursor.visible = !(SceneManager.GetActiveScene().name == "Game");
     }
 
@@ -102,14 +98,15 @@ public class UIManager : MonoBehaviour
 
     void SetWaveText()
     {
-        if (!waveText)
+        if (!wavePanelText)
         {
             if (wavePanel)
-                waveText = wavePanel.GetComponentInChildren<Text>();
+                wavePanelText = wavePanel.GetComponentInChildren<Text>();
             else
                 return;
         }
-        waveText.text = "Wave " + StatsManager.instance.wave;
+        wavePanelText.text = "Wave " + StatsManager.instance.wave;
+        waveText.text = "Wave: " + StatsManager.instance.wave;
     }
 
     void SetSliders()
@@ -144,10 +141,11 @@ public class UIManager : MonoBehaviour
             wavePanel.gameObject.SetActive(false);
     }
 
-    public void ShowWavePanel(string wavePanelText = "")
+    public void ShowWavePanel(string text = "")
     {
         wavePanel.gameObject.SetActive(true);
-        waveText.text = wavePanelText;
+        wavePanelText.text = text;
+        Invoke("DisableWavePanel", disableWavePanelDelay);
     }
 
     public void StartGame()

@@ -69,6 +69,8 @@ public class StatsManager : MonoBehaviour
 
         GetStats();
         GetAIStats();
+        wave = 5;
+        score = 1000000;
     }
 
     void GetStats()
@@ -86,8 +88,8 @@ public class StatsManager : MonoBehaviour
         highscore = PlayerPrefs.GetInt("Highscore", 0);
 
         damageLevel = PlayerPrefs.GetFloat("DamageLevel", 1);
-        minDamage = PlayerPrefs.GetInt("MinDamage", 5);
-        maxDamage = PlayerPrefs.GetInt("MaxDamage", 10);
+        minDamage = PlayerPrefs.GetInt("MinDamage", 15);
+        maxDamage = PlayerPrefs.GetInt("MaxDamage", 20);
         bulletSpeed = PlayerPrefs.GetInt("BulletSpeed", 100);
         shootDelay = PlayerPrefs.GetFloat("ShootDelay", 0.5f);
 

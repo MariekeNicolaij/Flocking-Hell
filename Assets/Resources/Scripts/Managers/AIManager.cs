@@ -14,7 +14,10 @@ public class AIManager : MonoBehaviour
     [HideInInspector]
     public List<GameObject> aliveNormalAI = new List<GameObject>();
 
-    public List<GameObject> flockingAIPrefab, normalAIPrefab;
+    public List<GameObject> flockingAIPrefab;//, normalAIPrefab;
+    public GameObject bossPrefab;
+    bool bossSpawned;
+    int bossWaveFrequency = 5;
 
     [HideInInspector]
     public List<Vector3> groupSpawnPoints;  // Spawn points for the group
@@ -51,7 +54,7 @@ public class AIManager : MonoBehaviour
         {
             player = GameObject.Find("Player").GetComponent<Player>();
         }
-        if (flockingAIPrefab.Count == 0 || normalAIPrefab.Count == 0)
+        if (flockingAIPrefab.Count == 0)// || normalAIPrefab.Count == 0)
         {
             Debug.LogError("No AI prefab(s) configured. (Please configure them both)");
             Destroy(this);
@@ -75,7 +78,7 @@ public class AIManager : MonoBehaviour
         difficultyMultiplier = StatsManager.instance.difficultyMultiplier;
 
         flockGroupAmount = StatsManager.instance.aiGroupSize + Mathf.RoundToInt(StatsManager.instance.wave / groupMultiplier);
-        flockSize = Mathf.RoundToInt(StatsManager.instance.aiFlockSize + difficultyMultiplier);
+        flockSize = 1;//Mathf.RoundToInt(StatsManager.instance.aiFlockSize + difficultyMultiplier);
 
         minVelocity = StatsManager.instance.aiMinVelocity;
         maxVelocity = StatsManager.instance.aiMaxVelocity;
@@ -142,9 +145,26 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    public void SpawnNormalAI()
+    //public void SpawnNormalAI()
+    //{
+    //    aliveAICount++;
+    //}
+
+    public void SpawnBoss()
     {
+        bossSpawned = true;
+        UIManager.instance.ShowWavePanel("Boss spawned");
+
+        GameObject ai = Instantiate(bossPrefab);
+        AI script = ai.GetComponent<AI>();
+
+        ai.transform.parent = AIParent.transform;
+        ai.transform.position = new Vector3(50, 0, 50); // Center of the map
+
+        script.SetAI(false, true); // No flock, is boss
+
         aliveAICount++;
+        UIManager.instance.UpdateAIAliveText(aliveAICount);
     }
 
     void Update()
@@ -193,13 +213,20 @@ public class AIManager : MonoBehaviour
         {
             aliveNormalAI.Remove(ai);
         }
-        
+
         aliveAICount--;
         UIManager.instance.UpdateAIAliveText(aliveAICount);
 
-        if (aliveAICount <= 0)
-            player.WaveComplete();
-
         Destroy(ai);
+
+        if (aliveAICount <= 0)
+        {
+            if (StatsManager.instance.wave % bossWaveFrequency == 0 && !bossSpawned)
+            {
+                SpawnBoss();
+                return; // Dont complete the wave yet
+            }
+            player.WaveComplete();
+        }
     }
 }

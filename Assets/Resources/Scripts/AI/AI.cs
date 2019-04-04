@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
     [HideInInspector]
     public Rigidbody rBody;
 
-    public bool isFlocking;
+    public bool isFlock, isBoss;
     public int groupIndex;          // Used if AI is flocking
     [HideInInspector]
     public float minVelocity;      // Min speed
@@ -19,26 +19,25 @@ public class AI : MonoBehaviour
 
     // Health
     public GameObject healthBar;
+    public TextMesh healthText;
     Material healthBarMaterial;
     public int health, maxHealth;
     public float minDamage, maxDamage;
-    TextMesh healthText;
 
     [HideInInspector]
     public bool isBeingDestroyed;   // So it does not get 'destroyed twice' (because sometimes when you shoot with 2 bullets this would happen)
 
 
-    public void SetAI(bool isFlock = false)
+    public void SetAI(bool isFlock = false, bool isBoss = false)
     {
         rBody = GetComponent<Rigidbody>();
-        isFlocking = isFlock;
+        this.isFlock = isFlock;
+        this.isBoss = isBoss;
+
         GetStats();
 
-        if (healthBar)
-        {
-            healthBarMaterial = healthBar.GetComponent<Renderer>().material;
-            healthText = healthBar.GetComponentInChildren<TextMesh>();
-        }
+        healthBarMaterial = healthBar.GetComponent<Renderer>().material;
+
         stateManager = new StateManager(this, (isFlock) ? (State)new FlockState() : (State)new NormalState());
     }
 
@@ -50,7 +49,16 @@ public class AI : MonoBehaviour
         minVelocity = AIManager.instance.minVelocity;
         maxVelocity = AIManager.instance.maxVelocity * StatsManager.instance.difficultyMultiplier;
 
+        if (isBoss) // Boss stats
+        {
+            health *= 10;
+            minDamage *= 10;
+            maxDamage *= 10;
+            maxVelocity = AIManager.instance.maxVelocity;
+        }
+
         maxHealth = health;
+        healthText.text = health.ToString();
     }
 
     void Update()
@@ -65,14 +73,14 @@ public class AI : MonoBehaviour
     /// <returns></returns>
     public int Damage()
     {
-        return Mathf.RoundToInt(Random.Range(minDamage, maxDamage));
+        return Mathf.CeilToInt(Random.Range(minDamage, maxDamage));
     }
 
     public void ReceiveDamage(int damage)
     {
         health -= damage;
 
-        if(health < 0)
+        if (health < 0)
         {
             health = 0;
             PlayDeathAnimation();
@@ -84,7 +92,7 @@ public class AI : MonoBehaviour
         blue.a = 0.5f;
         red.a = 0.5f;
 
-        if(healthBarMaterial)
+        if (healthBarMaterial)
             healthBarMaterial.color = Color.Lerp(red, blue, (float)health / (float)maxHealth); // Casten naar float omdat het een normalized value nodig heeft
         // Health bar text
         healthText.text = health.ToString();
@@ -93,6 +101,7 @@ public class AI : MonoBehaviour
     void PlayDeathAnimation()
     {
         // Play();
+        GetComponent<Collider>().enabled = false;
         ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
         ps.Play();
         Invoke("DestroyAI", ps.main.duration);
@@ -100,6 +109,6 @@ public class AI : MonoBehaviour
 
     void DestroyAI()
     {
-        AIManager.instance.DestroyAI(gameObject, isFlocking);
+        AIManager.instance.DestroyAI(gameObject, isFlock);
     }
 }

@@ -29,6 +29,9 @@ public class UpgradeShop : MonoBehaviour
     // Special attack
     public UpgradePanel specialAttackPanel;
 
+    // Focus
+    public GameObject focus;
+
     // ------Stats-------
     // Score
     public int score;
@@ -149,7 +152,7 @@ public class UpgradeShop : MonoBehaviour
         // Player
         healthCost = PlayerPrefs.GetInt("HealthCost", 1000);
         healthGenerationCost = PlayerPrefs.GetInt("HealthGenerationCost", 7500);
-        healthGenerationDelayCost = PlayerPrefs.GetInt("HealthGenerationDelayCost", 15000);
+        healthGenerationDelayCost = PlayerPrefs.GetInt("HealthGenerationDelayCost", 10000);
         speedCost = PlayerPrefs.GetInt("SpeedCost", 5000);
 
         // Laser
@@ -161,10 +164,10 @@ public class UpgradeShop : MonoBehaviour
         shootDelayCost = PlayerPrefs.GetInt("ShootDelayCost", 10000);
 
         // Camera
-        cameraZoomLevelCost = PlayerPrefs.GetInt("CameraZoomLevelCost", 15000);
+        cameraZoomLevelCost = PlayerPrefs.GetInt("CameraZoomLevelCost", 10000);
 
         // Special attack
-        specialAttackChargesCost = PlayerPrefs.GetInt("SpecialAttackCost", 75000);
+        specialAttackChargesCost = PlayerPrefs.GetInt("SpecialAttackCost", 25000);
     }
 
     /// <summary>
@@ -172,6 +175,7 @@ public class UpgradeShop : MonoBehaviour
     /// </summary>
     void SetTexts()
     {
+        score = 1000000000;
         // Score
         scoreText.text = "$ " + score;
 
@@ -211,7 +215,7 @@ public class UpgradeShop : MonoBehaviour
             "Maxed out!" :
             bulletSpeed + " > " + (bulletSpeed + bulletSpeedUpgrade));
 
-        shootDelayPanel.panelText.text = "Shoot Delay (" + shootDelay + ") : \n" +
+        shootDelayPanel.panelText.text = "Fire rate (" + shootDelay + ") : \n" +
             ((IsMaxedOut(shootDelay, shootDelayMin, false)) ?
             "Maxed out!" :
             shootDelay + " > " + (shootDelay - shootDelayUpgrade));
@@ -257,7 +261,7 @@ public class UpgradeShop : MonoBehaviour
     // Checks if (float)currentstat is maxed out
     bool IsMaxedOut(float currentValue, float maxedOutValue, bool checkForMaxedOut = true) // Check if it maxed out, otherwise check if it mins out (get it?)
     {
-        return (checkForMaxedOut) ? (currentValue >= maxedOutValue) : (currentValue <= maxedOutValue);
+        return (checkForMaxedOut) ? (currentValue >= maxedOutValue) : Mathf.Approximately(currentValue,maxedOutValue);
     }
 
     /// <summary>
@@ -295,7 +299,7 @@ public class UpgradeShop : MonoBehaviour
 
         PlayerPrefs.SetInt("CameraZoom", cameraZoomLevel);
 
-        PlayerPrefs.SetInt("SpecialAttack", 1);
+        PlayerPrefs.SetInt("SpecialAttackCharges", specialAttackCharges);
 
         // -------Costs--------
         // Player
@@ -377,6 +381,12 @@ public class UpgradeShop : MonoBehaviour
         SaveStatsAndCosts();
         SetTexts();
         ToggleButtons();
+        ReturnFocusToStartButton();
+    }
+
+    void ReturnFocusToStartButton()
+    {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(focus);
     }
 
     public void NextWave()

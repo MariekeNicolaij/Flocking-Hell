@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5502665039118379381}
   - component: {fileID: 7419291476946839667}
   - component: {fileID: 3395825419168822954}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PA_DroneBladeRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 2226104463511223003}
   - component: {fileID: 9079223227028243523}
   - component: {fileID: 7498710073679991662}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 3668476122098831620}
   - component: {fileID: 8188549428145158250}
   - component: {fileID: 585072621633049669}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PA_Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6526378738422123876}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,11 +353,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rBody: {fileID: 0}
-  isFlocking: 0
+  isFlock: 0
+  isBoss: 0
   groupIndex: 0
   minVelocity: 0
   maxVelocity: 0
   healthBar: {fileID: 1526589221350262082}
+  healthText: {fileID: 6244028241841649363}
   health: 0
   maxHealth: 0
   minDamage: 0
@@ -410,7 +412,7 @@ GameObject:
   - component: {fileID: 845010698282371454}
   - component: {fileID: 2205887927413466721}
   - component: {fileID: 3173472362883826122}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +502,7 @@ GameObject:
   - component: {fileID: 4759068811234671575}
   - component: {fileID: 2290381943095994147}
   - component: {fileID: 1765157411819708235}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PA_DroneWingRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +580,7 @@ GameObject:
   - component: {fileID: 521949813925721054}
   - component: {fileID: 6784053077601701528}
   - component: {fileID: 6244028241841649363}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: New Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +671,7 @@ GameObject:
   - component: {fileID: 8659390215801043577}
   - component: {fileID: 8408944050003276494}
   - component: {fileID: 436458444733988270}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PA_DroneWingLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +750,7 @@ GameObject:
   - component: {fileID: 8923131638316324997}
   - component: {fileID: 2373344448310061859}
   - component: {fileID: 5911270761490728772}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,7 +840,7 @@ GameObject:
   - component: {fileID: 3490349954975897255}
   - component: {fileID: 5088584843121587241}
   - component: {fileID: 9098781374874610354}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PA_DroneBladeLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     // Player
     Rigidbody rBody;
-    float moveSpeed;
+    public float moveSpeed;
 
     // Damaged
     float gettingHitDelay = 0.5f;
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     {
         // Stats
         GetStats();
-        
+
         // Animator
         animator = GetComponent<Animator>();
         animator.SetBool("Aiming", true);
@@ -99,16 +99,23 @@ public class Player : MonoBehaviour
             // Update Healthbar
             UIManager.instance.UpdateHealthBar(health, maxHealth);
         }
-        else if (health > maxHealth)    // Dont want it to go over max lol
+        if (health > maxHealth)    // Dont want it to go over max lol
         {
             health = maxHealth;
+
+            // Hitpoint UI
+            UIManager.instance.SpawnHitPoint(transform.position, Colors.green, -healthGeneration);
+            // Update Healthbar
+            UIManager.instance.UpdateHealthBar(health, maxHealth);
         }
     }
 
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == Layer.AI)
+        {
             ReceiveDamage(other.GetComponent<AI>().Damage());
+        }
         if (other.tag == "Fire")
             ReceiveDamage(5);   // Fire damage I guess
     }
@@ -177,6 +184,8 @@ public class Player : MonoBehaviour
     {
         if (specialAttackCharges <= 0)
             return;
+        specialAttackCharges--;
+
         Vector3 startPosition = transform.position;
         startPosition.y = 0.7f; // Pistol height
         Vector3 direction = transform.forward;
@@ -194,6 +203,7 @@ public class Player : MonoBehaviour
     {
         pause = !pause;
         Time.timeScale = System.Convert.ToInt32(!pause);
+        Cursor.visible = pause;
         UIManager.instance.TogglePausePanel(pause);
     }
 
@@ -210,7 +220,7 @@ public class Player : MonoBehaviour
 
     int RandomScore()
     {
-        return Mathf.RoundToInt(Random.Range(10, 15) * StatsManager.instance.difficultyMultiplier);
+        return Mathf.RoundToInt(Random.Range(20, 30) * StatsManager.instance.difficultyMultiplier);
     }
 
     void ReceiveDamage(int damage)

@@ -133,7 +133,7 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: 1ab924e3becf3014cba33b3801847052, type: 2}
   minDamage: 0
   maxDamage: 0
-  bulletAliveTime: 1
+  bulletAliveTime: 2
 --- !u!136 &4423909970205436550
 CapsuleCollider:
   m_ObjectHideFlags: 0

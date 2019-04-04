@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     public float minDamage, maxDamage;
     [Range(1, 10)]
-    public float bulletAliveTime = 1;
+    public float bulletAliveTime = 2;
     bool special;
 
 
