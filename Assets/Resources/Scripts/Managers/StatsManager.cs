@@ -69,8 +69,6 @@ public class StatsManager : MonoBehaviour
 
         GetStats();
         GetAIStats();
-        wave = 5;
-        score = 1000000;
     }
 
     void GetStats()
