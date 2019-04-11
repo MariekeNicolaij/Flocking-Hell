@@ -130,6 +130,7 @@ public class UIManager : MonoBehaviour
         float value = slider.value * sliderSteps;     // Because I want steps of 5 (0,5,10,15 etc.)
         slider.GetComponentInChildren<Text>().text = label + ": " + (int)value + "%";
 
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.Select);
         PlayerPrefs.SetFloat(label + "Volume", value);
         AudioManager.instance.SetVolumes();
     }
@@ -150,11 +151,18 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.Select);
         SceneManager.LoadScene("UpgradeShop");
     }
 
     public void TogglePausePanel(bool show)
     {
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.Select);
+        if (show)
+            AudioManager.instance.musicSource.Pause();
+        else
+            AudioManager.instance.musicSource.UnPause();
+
         pausePanel.SetActive(show);
     }
 

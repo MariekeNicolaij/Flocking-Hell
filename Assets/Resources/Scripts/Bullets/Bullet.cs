@@ -35,6 +35,9 @@ public class Bullet : MonoBehaviour
 
         line = gameObject.AddComponent<LineRenderer>();
 
+        // Play sound
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.Shoot);
+
         if (special)
         {
             line.widthMultiplier = 0.05f;
@@ -70,6 +73,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.BulletHit);
         if (other.gameObject.layer == Layer.AI)
         {
             AI ai = other.gameObject.GetComponent<AI>();

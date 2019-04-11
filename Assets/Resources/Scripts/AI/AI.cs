@@ -109,6 +109,7 @@ public class AI : MonoBehaviour
 
     void DestroyAI()
     {
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.AIDies);
         AIManager.instance.DestroyAI(gameObject, isFlock);
     }
 }

@@ -175,7 +175,6 @@ public class UpgradeShop : MonoBehaviour
     /// </summary>
     void SetTexts()
     {
-        score = 1000000000;
         // Score
         scoreText.text = "$ " + score;
 
@@ -378,6 +377,7 @@ public class UpgradeShop : MonoBehaviour
                 break;
         }
 
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.Select);
         SaveStatsAndCosts();
         SetTexts();
         ToggleButtons();
@@ -391,6 +391,7 @@ public class UpgradeShop : MonoBehaviour
 
     public void NextWave()
     {
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.Select);
         PlayerPrefs.SetString("Scene", "Game");
         SceneManager.LoadScene("Loading");
     }

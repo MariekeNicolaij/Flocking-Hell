@@ -78,7 +78,7 @@ public class AIManager : MonoBehaviour
         difficultyMultiplier = StatsManager.instance.difficultyMultiplier;
 
         flockGroupAmount = StatsManager.instance.aiGroupSize + Mathf.RoundToInt(StatsManager.instance.wave / groupMultiplier);
-        flockSize = 1;//Mathf.RoundToInt(StatsManager.instance.aiFlockSize + difficultyMultiplier);
+        flockSize = Mathf.RoundToInt(StatsManager.instance.aiFlockSize + difficultyMultiplier);
 
         minVelocity = StatsManager.instance.aiMinVelocity;
         maxVelocity = StatsManager.instance.aiMaxVelocity;
@@ -216,6 +216,7 @@ public class AIManager : MonoBehaviour
 
         aliveAICount--;
         UIManager.instance.UpdateAIAliveText(aliveAICount);
+        AudioManager.instance.PlaySound(GetComponentInChildren<AudioSource>(), Sounds.AIDies);
 
         Destroy(ai);
 

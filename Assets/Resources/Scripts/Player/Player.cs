@@ -271,6 +271,8 @@ public class Player : MonoBehaviour
 
     void LoadGameOver()
     {
+        // Remove stored data
+        StatsManager.instance.OnApplicationQuit();
         SceneManager.LoadScene("GameOver");
     }
 
@@ -281,9 +283,14 @@ public class Player : MonoBehaviour
         int nextWave = StatsManager.instance.wave + 1;
         float difficultyMultiplier = nextWave * 0.33f;
 
+        // Save score
         int oldScore = PlayerPrefs.GetInt("Score");
         PlayerPrefs.SetInt("Score", score + oldScore);
+
+        // Save wave
         PlayerPrefs.SetInt("Wave", nextWave);
+
+        // Set difficulty
         PlayerPrefs.SetFloat("DifficultyMultiplier", difficultyMultiplier);
 
         Cursor.visible = true;

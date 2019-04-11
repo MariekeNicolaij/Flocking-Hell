@@ -109,28 +109,18 @@ public class StatsManager : MonoBehaviour
         aiGroupSize = PlayerPrefs.GetInt("AIGroupSize", 2);
     }
 
-    /// <summary>
-    /// Saves score
-    /// </summary>
-    public void SaveScore()
-    {
-        int score = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().score;
-        PlayerPrefs.SetInt("Score", score);
-        PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore") + score);
-    }
-
     // Reset everything except highscore and volume settings
-    void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
-        int totalScore = PlayerPrefs.GetInt("TotalScore");
+        int currentScore = PlayerPrefs.GetInt("Score");
         float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 100);   // If it hasnt been set I do not want it to save 0
         float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 100);       // *
 
         // Delete all the keys!
         PlayerPrefs.DeleteAll();
 
-        // If totalscore is higher than highscore
-        PlayerPrefs.SetInt("Highscore", (totalScore > highscore) ? totalScore : highscore);
+        // If currentScore is higher than highscore
+        PlayerPrefs.SetInt("Highscore", (currentScore > highscore) ? currentScore : highscore);
 
         // Re-set volume (lol)
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
